@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "CawBMS")(type "KiCad")(uri "${KIPRJMOD}/CawBMS.pretty")(options "")(descr ""))
+)
