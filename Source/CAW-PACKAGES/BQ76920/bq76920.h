@@ -7,11 +7,14 @@
 #define BQ76920_I2C_ADDRESS (0x08 << 1)
 #define BQ76920_I2C_TIMEOUT 500
 #define BQ76920_GAIN_BASE 365
+#define BQ76920_OV_TARGET 4.18
+#define BQ76920_UV_TARGET 2.7
 
 typedef struct _BQ76920_T {
   I2C_HandleTypeDef* hi2c;
   uint16_t GAIN;
   uint16_t OFFSET;
+  float CellVoltage[5];
 } BQ76920_T;
 
 typedef enum _BQ76920_REG_MAP_E {
@@ -149,10 +152,10 @@ typedef enum _BQ76920_OCD_THRESHOLD_E {
  * @return {*}
  */
 typedef enum _UV_DELAY_E {
-  UV_DELAY_1ms = 0x0,
-  UV_DELAY_4ms = 0x01,
-  UV_DELAY_8ms = 0x02,
-  UV_DELAY_16ms = 0x03,
+  UV_DELAY_1s = 0x0,
+  UV_DELAY_4s = 0x01,
+  UV_DELAY_8s = 0x02,
+  UV_DELAY_16s = 0x03,
 } UV_DELAY_E;
 
 /**
@@ -160,15 +163,16 @@ typedef enum _UV_DELAY_E {
  * @return {*}
  */
 typedef enum _OV_DELAY_E {
-  OV_DELAY_1ms = 0x0,
-  OV_DELAY_2ms = 0x01,
-  OV_DELAY_4ms = 0x02,
-  OV_DELAY_8ms = 0x03,
+  OV_DELAY_1s = 0x0,
+  OV_DELAY_2s = 0x01,
+  OV_DELAY_4s = 0x02,
+  OV_DELAY_8s = 0x03,
 } OV_DELAY_E;
 
 int BQ76920_Init(BQ76920_T* bq, I2C_HandleTypeDef* i2c);
 int BQ76920_SysStat(BQ76920_T* bq, BQ76920_SYS_STAT_T* st);
 int BQ76920_SysCtrl2(BQ76920_T* bq, BQ76920_SYS_CTRL2_T* st);
 int BQ76920_CellBal1(BQ76920_T* bq, BQ76920_CELLBAL1_T* st);
+int BQ76920_UpdateCellVoltage(BQ76920_T* bq);
 
 #endif

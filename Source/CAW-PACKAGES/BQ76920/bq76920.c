@@ -80,10 +80,23 @@ int BQ76920_Init(BQ76920_T* bq, I2C_HandleTypeDef* i2c) {
   // 设置PROTECT3
   uint8_t protect3_reg;
   _I2C_READ_BYTE(bq, PROTECT3, &protect3_reg);
-  protect3_reg = protect3_reg | (UV_DELAY_4ms << 6);
-  protect3_reg = protect3_reg | (OV_DELAY_4ms << 4);
+  protect3_reg = protect3_reg | (UV_DELAY_4s << 6);
+  protect3_reg = protect3_reg | (OV_DELAY_4s << 4);
   _I2C_WRITE_BYTE(bq, PROTECT3, protect3_reg);
 
+  // 配置过压阈值
+  uint16_t OV = BQ76920_OV_TARGET * 1000.0;  // to mV
+  uint16_t OV_tmp = (float)(OV - bq->OFFSET) / (float)(bq->GAIN / 1000.0);
+  OV_tmp = (OV_tmp & 0x0FF0) >> 4;
+  uint8_t OV_TRIP_value = OV_tmp & 0xFF;
+  _I2C_WRITE_BYTE(bq, OV_TRIP, OV_TRIP_value);
+
+  // 配置欠压阈值
+  uint16_t UV = BQ76920_UV_TARGET * 1000.0;  // to mV
+  uint16_t UV_tmp = (float)(UV - bq->OFFSET) / (float)(bq->GAIN / 1000.0);
+  UV_tmp = (UV_tmp & 0x0FF0) >> 4;
+  uint8_t UV_TRIP_value = UV_tmp & 0xFF;
+  _I2C_WRITE_BYTE(bq, UV_TRIP, UV_TRIP_value);
   return 0;
 }
 
@@ -119,6 +132,12 @@ int BQ76920_SysCtrl2(BQ76920_T* bq, BQ76920_SYS_CTRL2_T* st) {
   return CAW_OK;
 }
 
+/**
+ * @description: 获取均衡状态
+ * @param {BQ76920_T*} bq
+ * @param {BQ76920_CELLBAL1_T*} st
+ * @return {*}
+ */
 int BQ76920_CellBal1(BQ76920_T* bq, BQ76920_CELLBAL1_T* st) {
   uint8_t data;
   if (CAW_OK != _I2C_READ_BYTE(bq, CELLBAL1, &data)) {
@@ -129,5 +148,30 @@ int BQ76920_CellBal1(BQ76920_T* bq, BQ76920_CELLBAL1_T* st) {
   st->CB3 = (data >> 2) & 0x01;
   st->CB4 = (data >> 3) & 0x01;
   st->CB5 = (data >> 4) & 0x01;
+  return CAW_OK;
+}
+
+/**
+ * @description: 更新电压数据
+ * @param {BQ76920_T*} bq
+ * @return {*}
+ */
+int BQ76920_UpdateCellVoltage(BQ76920_T* bq) {
+  uint8_t reg[2];
+
+  uint16_t VC_base = VC1_HI;
+
+  for (int i = 0; i < 5; i++) {
+    if (_I2C_READ_BYTE(bq, VC_base + i * 2, &reg[0])) {
+      return CAW_ERR;
+    }
+    if (_I2C_READ_BYTE(bq, VC_base + i * 2 + 1, &reg[1])) {
+      return CAW_ERR;
+    }
+    uint16_t v = ((reg[0] & 0x3F) << 8) | reg[1];
+    bq->CellVoltage[i] =
+        ((float)(bq->GAIN / 1000.0) * (float)v + (float)(bq->OFFSET)) / 1000.0;
+    bq->CellVoltage[i] = 4.2 * bq->CellVoltage[i] / 6.275;
+  }
   return CAW_OK;
 }

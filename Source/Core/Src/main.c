@@ -107,6 +107,10 @@ int main(void) {
   BQ76920_Init(&afe, &hi2c1);
   while (1) {
     HAL_GPIO_TogglePin(LED_A_GPIO_Port, LED_A_Pin);
+    BQ76920_UpdateCellVoltage(&afe);
+    CAW_LOG_DEBUG("c1: %f c2: %f c3: %f c4: %f c5 %f", afe.CellVoltage[0],
+                  afe.CellVoltage[1], afe.CellVoltage[2], afe.CellVoltage[3],
+                  afe.CellVoltage[4]);
     HAL_Delay(500);
     /* USER CODE END WHILE */
 
