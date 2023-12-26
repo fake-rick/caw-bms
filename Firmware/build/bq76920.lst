@@ -1,0 +1,1343 @@
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"bq76920.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text._CRC8_CCITT_Update,"ax",%progbits
+  18              		.align	1
+  19              		.global	_CRC8_CCITT_Update
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	_CRC8_CCITT_Update:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "CAW-PACKAGES/BQ76920/bq76920.c"
+   1:CAW-PACKAGES/BQ76920/bq76920.c **** #include "bq76920.h"
+   2:CAW-PACKAGES/BQ76920/bq76920.c **** 
+   3:CAW-PACKAGES/BQ76920/bq76920.c **** #include "caw_status.h"
+   4:CAW-PACKAGES/BQ76920/bq76920.c **** #include "log.h"
+   5:CAW-PACKAGES/BQ76920/bq76920.c **** 
+   6:CAW-PACKAGES/BQ76920/bq76920.c **** uint8_t _CRC8_CCITT_Update(uint8_t in_crc, uint8_t in_data) {
+  28              		.loc 1 6 61 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+   7:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t i;
+  33              		.loc 1 7 3 view .LVU1
+   8:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t data;
+  34              		.loc 1 8 3 view .LVU2
+   9:CAW-PACKAGES/BQ76920/bq76920.c ****   data = in_crc ^ in_data;
+  35              		.loc 1 9 3 view .LVU3
+  36              		.loc 1 9 8 is_stmt 0 view .LVU4
+  37 0000 4840     		eors	r0, r0, r1
+  38              	.LVL1:
+  10:CAW-PACKAGES/BQ76920/bq76920.c ****   for (i = 0; i < 8; i++) {
+  39              		.loc 1 10 3 is_stmt 1 view .LVU5
+  40              		.loc 1 10 10 is_stmt 0 view .LVU6
+  41 0002 0023     		movs	r3, #0
+  42              		.loc 1 10 3 view .LVU7
+  43 0004 03E0     		b	.L2
+  44              	.LVL2:
+  45              	.L3:
+  11:CAW-PACKAGES/BQ76920/bq76920.c ****     if ((data & 0x80) != 0) {
+  12:CAW-PACKAGES/BQ76920/bq76920.c ****       data <<= 1;
+  13:CAW-PACKAGES/BQ76920/bq76920.c ****       data ^= 0x07;
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 2
+
+
+  14:CAW-PACKAGES/BQ76920/bq76920.c ****     } else {
+  15:CAW-PACKAGES/BQ76920/bq76920.c ****       data <<= 1;
+  46              		.loc 1 15 7 is_stmt 1 view .LVU8
+  47              		.loc 1 15 12 is_stmt 0 view .LVU9
+  48 0006 4000     		lsls	r0, r0, #1
+  49              	.LVL3:
+  50              		.loc 1 15 12 view .LVU10
+  51 0008 C0B2     		uxtb	r0, r0
+  52              	.LVL4:
+  53              	.L4:
+  10:CAW-PACKAGES/BQ76920/bq76920.c ****   for (i = 0; i < 8; i++) {
+  54              		.loc 1 10 22 is_stmt 1 discriminator 2 view .LVU11
+  10:CAW-PACKAGES/BQ76920/bq76920.c ****   for (i = 0; i < 8; i++) {
+  55              		.loc 1 10 23 is_stmt 0 discriminator 2 view .LVU12
+  56 000a 0133     		adds	r3, r3, #1
+  57              	.LVL5:
+  10:CAW-PACKAGES/BQ76920/bq76920.c ****   for (i = 0; i < 8; i++) {
+  58              		.loc 1 10 23 discriminator 2 view .LVU13
+  59 000c DBB2     		uxtb	r3, r3
+  60              	.LVL6:
+  61              	.L2:
+  10:CAW-PACKAGES/BQ76920/bq76920.c ****   for (i = 0; i < 8; i++) {
+  62              		.loc 1 10 15 is_stmt 1 discriminator 1 view .LVU14
+  10:CAW-PACKAGES/BQ76920/bq76920.c ****   for (i = 0; i < 8; i++) {
+  63              		.loc 1 10 3 is_stmt 0 discriminator 1 view .LVU15
+  64 000e 072B     		cmp	r3, #7
+  65 0010 07D8     		bhi	.L6
+  11:CAW-PACKAGES/BQ76920/bq76920.c ****     if ((data & 0x80) != 0) {
+  66              		.loc 1 11 5 is_stmt 1 view .LVU16
+  11:CAW-PACKAGES/BQ76920/bq76920.c ****     if ((data & 0x80) != 0) {
+  67              		.loc 1 11 8 is_stmt 0 view .LVU17
+  68 0012 10F0800F 		tst	r0, #128
+  69 0016 F6D0     		beq	.L3
+  12:CAW-PACKAGES/BQ76920/bq76920.c ****       data ^= 0x07;
+  70              		.loc 1 12 7 is_stmt 1 view .LVU18
+  12:CAW-PACKAGES/BQ76920/bq76920.c ****       data ^= 0x07;
+  71              		.loc 1 12 12 is_stmt 0 view .LVU19
+  72 0018 4000     		lsls	r0, r0, #1
+  73              	.LVL7:
+  12:CAW-PACKAGES/BQ76920/bq76920.c ****       data ^= 0x07;
+  74              		.loc 1 12 12 view .LVU20
+  75 001a C0B2     		uxtb	r0, r0
+  76              	.LVL8:
+  13:CAW-PACKAGES/BQ76920/bq76920.c ****     } else {
+  77              		.loc 1 13 7 is_stmt 1 view .LVU21
+  13:CAW-PACKAGES/BQ76920/bq76920.c ****     } else {
+  78              		.loc 1 13 12 is_stmt 0 view .LVU22
+  79 001c 80F00700 		eor	r0, r0, #7
+  80              	.LVL9:
+  13:CAW-PACKAGES/BQ76920/bq76920.c ****     } else {
+  81              		.loc 1 13 12 view .LVU23
+  82 0020 F3E7     		b	.L4
+  83              	.L6:
+  16:CAW-PACKAGES/BQ76920/bq76920.c ****     }
+  17:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+  18:CAW-PACKAGES/BQ76920/bq76920.c ****   return data;
+  84              		.loc 1 18 3 is_stmt 1 view .LVU24
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 3
+
+
+  19:CAW-PACKAGES/BQ76920/bq76920.c **** }
+  85              		.loc 1 19 1 is_stmt 0 view .LVU25
+  86 0022 7047     		bx	lr
+  87              		.cfi_endproc
+  88              	.LFE65:
+  90              		.section	.rodata._I2C_READ_BYTE.str1.4,"aMS",%progbits,1
+  91              		.align	2
+  92              	.LC0:
+  93 0000 4341572D 		.ascii	"CAW-PACKAGES/BQ76920/bq76920.c\000"
+  93      5041434B 
+  93      41474553 
+  93      2F425137 
+  93      36393230 
+  94 001f 00       		.align	2
+  95              	.LC1:
+  96 0020 5F493243 		.ascii	"_I2C_READ_BYTE failed\000"
+  96      5F524541 
+  96      445F4259 
+  96      54452066 
+  96      61696C65 
+  97              		.section	.text._I2C_READ_BYTE,"ax",%progbits
+  98              		.align	1
+  99              		.global	_I2C_READ_BYTE
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 104              	_I2C_READ_BYTE:
+ 105              	.LVL10:
+ 106              	.LFB66:
+  20:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  21:CAW-PACKAGES/BQ76920/bq76920.c **** int _I2C_READ_BYTE(BQ76920_T* bq, uint16_t reg, uint8_t* data) {
+ 107              		.loc 1 21 64 is_stmt 1 view -0
+ 108              		.cfi_startproc
+ 109              		@ args = 0, pretend = 0, frame = 0
+ 110              		@ frame_needed = 0, uses_anonymous_args = 0
+ 111              		.loc 1 21 64 is_stmt 0 view .LVU27
+ 112 0000 00B5     		push	{lr}
+ 113              	.LCFI0:
+ 114              		.cfi_def_cfa_offset 4
+ 115              		.cfi_offset 14, -4
+ 116 0002 85B0     		sub	sp, sp, #20
+ 117              	.LCFI1:
+ 118              		.cfi_def_cfa_offset 24
+  22:CAW-PACKAGES/BQ76920/bq76920.c ****   if (HAL_OK != HAL_I2C_Mem_Read(bq->hi2c, BQ76920_I2C_ADDRESS, reg,
+ 119              		.loc 1 22 3 is_stmt 1 view .LVU28
+ 120              		.loc 1 22 17 is_stmt 0 view .LVU29
+ 121 0004 0068     		ldr	r0, [r0]
+ 122              	.LVL11:
+ 123              		.loc 1 22 17 view .LVU30
+ 124 0006 4FF4FA73 		mov	r3, #500
+ 125 000a 0293     		str	r3, [sp, #8]
+ 126 000c 0123     		movs	r3, #1
+ 127 000e 0193     		str	r3, [sp, #4]
+ 128 0010 0092     		str	r2, [sp]
+ 129 0012 0A46     		mov	r2, r1
+ 130              	.LVL12:
+ 131              		.loc 1 22 17 view .LVU31
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 4
+
+
+ 132 0014 1021     		movs	r1, #16
+ 133              	.LVL13:
+ 134              		.loc 1 22 17 view .LVU32
+ 135 0016 FFF7FEFF 		bl	HAL_I2C_Mem_Read
+ 136              	.LVL14:
+ 137              		.loc 1 22 6 view .LVU33
+ 138 001a 18B9     		cbnz	r0, .L11
+  23:CAW-PACKAGES/BQ76920/bq76920.c ****                                  I2C_MEMADD_SIZE_8BIT, data, 1,
+  24:CAW-PACKAGES/BQ76920/bq76920.c ****                                  BQ76920_I2C_TIMEOUT)) {
+  25:CAW-PACKAGES/BQ76920/bq76920.c ****     CAW_LOG_ERROR("_I2C_READ_BYTE failed");
+  26:CAW-PACKAGES/BQ76920/bq76920.c ****     return CAW_ERR;
+  27:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+  28:CAW-PACKAGES/BQ76920/bq76920.c ****   return CAW_OK;
+ 139              		.loc 1 28 10 view .LVU34
+ 140 001c 0020     		movs	r0, #0
+ 141              	.L7:
+  29:CAW-PACKAGES/BQ76920/bq76920.c **** }
+ 142              		.loc 1 29 1 view .LVU35
+ 143 001e 05B0     		add	sp, sp, #20
+ 144              	.LCFI2:
+ 145              		.cfi_remember_state
+ 146              		.cfi_def_cfa_offset 4
+ 147              		@ sp needed
+ 148 0020 5DF804FB 		ldr	pc, [sp], #4
+ 149              	.L11:
+ 150              	.LCFI3:
+ 151              		.cfi_restore_state
+  25:CAW-PACKAGES/BQ76920/bq76920.c ****     return CAW_ERR;
+ 152              		.loc 1 25 5 is_stmt 1 view .LVU36
+ 153 0024 054B     		ldr	r3, .L12
+ 154 0026 0093     		str	r3, [sp]
+ 155 0028 1923     		movs	r3, #25
+ 156 002a 054A     		ldr	r2, .L12+4
+ 157 002c 41F20301 		movw	r1, #4099
+ 158 0030 0448     		ldr	r0, .L12+8
+ 159 0032 FFF7FEFF 		bl	CAW_LOG_Write
+ 160              	.LVL15:
+  26:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 161              		.loc 1 26 5 view .LVU37
+  26:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 162              		.loc 1 26 12 is_stmt 0 view .LVU38
+ 163 0036 4FF0FF30 		mov	r0, #-1
+ 164 003a F0E7     		b	.L7
+ 165              	.L13:
+ 166              		.align	2
+ 167              	.L12:
+ 168 003c 00000000 		.word	.LANCHOR0
+ 169 0040 00000000 		.word	.LC0
+ 170 0044 20000000 		.word	.LC1
+ 171              		.cfi_endproc
+ 172              	.LFE66:
+ 174              		.section	.rodata._I2C_WRITE_BYTE.str1.4,"aMS",%progbits,1
+ 175              		.align	2
+ 176              	.LC2:
+ 177 0000 5F493243 		.ascii	"_I2C_WRITE_BYTE failed\000"
+ 177      5F575249 
+ 177      54455F42 
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 5
+
+
+ 177      59544520 
+ 177      6661696C 
+ 178              		.section	.text._I2C_WRITE_BYTE,"ax",%progbits
+ 179              		.align	1
+ 180              		.global	_I2C_WRITE_BYTE
+ 181              		.syntax unified
+ 182              		.thumb
+ 183              		.thumb_func
+ 185              	_I2C_WRITE_BYTE:
+ 186              	.LVL16:
+ 187              	.LFB67:
+  30:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  31:CAW-PACKAGES/BQ76920/bq76920.c **** int _I2C_WRITE_BYTE(BQ76920_T* bq, uint16_t reg, uint8_t data) {
+ 188              		.loc 1 31 64 is_stmt 1 view -0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 8
+ 191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 192              		.loc 1 31 64 is_stmt 0 view .LVU40
+ 193 0000 70B5     		push	{r4, r5, r6, lr}
+ 194              	.LCFI4:
+ 195              		.cfi_def_cfa_offset 16
+ 196              		.cfi_offset 4, -16
+ 197              		.cfi_offset 5, -12
+ 198              		.cfi_offset 6, -8
+ 199              		.cfi_offset 14, -4
+ 200 0002 84B0     		sub	sp, sp, #16
+ 201              	.LCFI5:
+ 202              		.cfi_def_cfa_offset 32
+ 203 0004 0646     		mov	r6, r0
+ 204 0006 1446     		mov	r4, r2
+  32:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t buf[3];
+ 205              		.loc 1 32 3 is_stmt 1 view .LVU41
+  33:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t crc = 0;
+ 206              		.loc 1 33 3 view .LVU42
+ 207              	.LVL17:
+  34:CAW-PACKAGES/BQ76920/bq76920.c ****   buf[0] = reg;
+ 208              		.loc 1 34 3 view .LVU43
+ 209              		.loc 1 34 10 is_stmt 0 view .LVU44
+ 210 0008 CDB2     		uxtb	r5, r1
+ 211 000a 8DF80C50 		strb	r5, [sp, #12]
+  35:CAW-PACKAGES/BQ76920/bq76920.c ****   buf[1] = data;
+ 212              		.loc 1 35 3 is_stmt 1 view .LVU45
+ 213              		.loc 1 35 10 is_stmt 0 view .LVU46
+ 214 000e 8DF80D20 		strb	r2, [sp, #13]
+  36:CAW-PACKAGES/BQ76920/bq76920.c ****   crc = _CRC8_CCITT_Update(crc, BQ76920_I2C_ADDRESS);
+ 215              		.loc 1 36 3 is_stmt 1 view .LVU47
+ 216              		.loc 1 36 9 is_stmt 0 view .LVU48
+ 217 0012 1021     		movs	r1, #16
+ 218              	.LVL18:
+ 219              		.loc 1 36 9 view .LVU49
+ 220 0014 0020     		movs	r0, #0
+ 221              	.LVL19:
+ 222              		.loc 1 36 9 view .LVU50
+ 223 0016 FFF7FEFF 		bl	_CRC8_CCITT_Update
+ 224              	.LVL20:
+  37:CAW-PACKAGES/BQ76920/bq76920.c ****   crc = _CRC8_CCITT_Update(crc, buf[0]);
+ 225              		.loc 1 37 3 is_stmt 1 view .LVU51
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 6
+
+
+ 226              		.loc 1 37 9 is_stmt 0 view .LVU52
+ 227 001a 2946     		mov	r1, r5
+ 228 001c FFF7FEFF 		bl	_CRC8_CCITT_Update
+ 229              	.LVL21:
+  38:CAW-PACKAGES/BQ76920/bq76920.c ****   crc = _CRC8_CCITT_Update(crc, buf[1]);
+ 230              		.loc 1 38 3 is_stmt 1 view .LVU53
+ 231              		.loc 1 38 9 is_stmt 0 view .LVU54
+ 232 0020 2146     		mov	r1, r4
+ 233 0022 FFF7FEFF 		bl	_CRC8_CCITT_Update
+ 234              	.LVL22:
+  39:CAW-PACKAGES/BQ76920/bq76920.c ****   buf[2] = crc;
+ 235              		.loc 1 39 3 is_stmt 1 view .LVU55
+ 236              		.loc 1 39 10 is_stmt 0 view .LVU56
+ 237 0026 8DF80E00 		strb	r0, [sp, #14]
+  40:CAW-PACKAGES/BQ76920/bq76920.c ****   if (HAL_OK != HAL_I2C_Master_Transmit(bq->hi2c, BQ76920_I2C_ADDRESS, buf,
+ 238              		.loc 1 40 3 is_stmt 1 view .LVU57
+ 239              		.loc 1 40 17 is_stmt 0 view .LVU58
+ 240 002a 4FF4FA73 		mov	r3, #500
+ 241 002e 0093     		str	r3, [sp]
+ 242 0030 0323     		movs	r3, #3
+ 243 0032 03AA     		add	r2, sp, #12
+ 244 0034 1021     		movs	r1, #16
+ 245 0036 3068     		ldr	r0, [r6]
+ 246              	.LVL23:
+ 247              		.loc 1 40 17 view .LVU59
+ 248 0038 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+ 249              	.LVL24:
+ 250              		.loc 1 40 6 view .LVU60
+ 251 003c 10B9     		cbnz	r0, .L18
+  41:CAW-PACKAGES/BQ76920/bq76920.c ****                                         sizeof(buf), BQ76920_I2C_TIMEOUT)) {
+  42:CAW-PACKAGES/BQ76920/bq76920.c ****     CAW_LOG_ERROR("_I2C_WRITE_BYTE failed");
+  43:CAW-PACKAGES/BQ76920/bq76920.c ****     return CAW_ERR;
+  44:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+  45:CAW-PACKAGES/BQ76920/bq76920.c ****   return CAW_OK;
+ 252              		.loc 1 45 10 view .LVU61
+ 253 003e 0020     		movs	r0, #0
+ 254              	.L14:
+  46:CAW-PACKAGES/BQ76920/bq76920.c **** }
+ 255              		.loc 1 46 1 view .LVU62
+ 256 0040 04B0     		add	sp, sp, #16
+ 257              	.LCFI6:
+ 258              		.cfi_remember_state
+ 259              		.cfi_def_cfa_offset 16
+ 260              		@ sp needed
+ 261 0042 70BD     		pop	{r4, r5, r6, pc}
+ 262              	.LVL25:
+ 263              	.L18:
+ 264              	.LCFI7:
+ 265              		.cfi_restore_state
+  42:CAW-PACKAGES/BQ76920/bq76920.c ****     return CAW_ERR;
+ 266              		.loc 1 42 5 is_stmt 1 view .LVU63
+ 267 0044 054B     		ldr	r3, .L19
+ 268 0046 0093     		str	r3, [sp]
+ 269 0048 2A23     		movs	r3, #42
+ 270 004a 054A     		ldr	r2, .L19+4
+ 271 004c 41F20301 		movw	r1, #4099
+ 272 0050 0448     		ldr	r0, .L19+8
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 7
+
+
+ 273 0052 FFF7FEFF 		bl	CAW_LOG_Write
+ 274              	.LVL26:
+  43:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 275              		.loc 1 43 5 view .LVU64
+  43:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 276              		.loc 1 43 12 is_stmt 0 view .LVU65
+ 277 0056 4FF0FF30 		mov	r0, #-1
+ 278 005a F1E7     		b	.L14
+ 279              	.L20:
+ 280              		.align	2
+ 281              	.L19:
+ 282 005c 00000000 		.word	.LANCHOR1
+ 283 0060 00000000 		.word	.LC0
+ 284 0064 00000000 		.word	.LC2
+ 285              		.cfi_endproc
+ 286              	.LFE67:
+ 288              		.global	__aeabi_i2f
+ 289              		.global	__aeabi_i2d
+ 290              		.global	__aeabi_ddiv
+ 291              		.global	__aeabi_d2f
+ 292              		.global	__aeabi_fdiv
+ 293              		.global	__aeabi_f2uiz
+ 294              		.section	.text.BQ76920_Init,"ax",%progbits
+ 295              		.align	1
+ 296              		.global	BQ76920_Init
+ 297              		.syntax unified
+ 298              		.thumb
+ 299              		.thumb_func
+ 301              	BQ76920_Init:
+ 302              	.LVL27:
+ 303              	.LFB68:
+  47:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  48:CAW-PACKAGES/BQ76920/bq76920.c **** int BQ76920_Init(BQ76920_T* bq, I2C_HandleTypeDef* i2c) {
+ 304              		.loc 1 48 57 is_stmt 1 view -0
+ 305              		.cfi_startproc
+ 306              		@ args = 0, pretend = 0, frame = 8
+ 307              		@ frame_needed = 0, uses_anonymous_args = 0
+ 308              		.loc 1 48 57 is_stmt 0 view .LVU67
+ 309 0000 30B5     		push	{r4, r5, lr}
+ 310              	.LCFI8:
+ 311              		.cfi_def_cfa_offset 12
+ 312              		.cfi_offset 4, -12
+ 313              		.cfi_offset 5, -8
+ 314              		.cfi_offset 14, -4
+ 315 0002 83B0     		sub	sp, sp, #12
+ 316              	.LCFI9:
+ 317              		.cfi_def_cfa_offset 24
+ 318 0004 0446     		mov	r4, r0
+  49:CAW-PACKAGES/BQ76920/bq76920.c ****   bq->hi2c = i2c;
+ 319              		.loc 1 49 3 is_stmt 1 view .LVU68
+ 320              		.loc 1 49 12 is_stmt 0 view .LVU69
+ 321 0006 0160     		str	r1, [r0]
+  50:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  51:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, SYS_STAT, 0xff);
+ 322              		.loc 1 51 3 is_stmt 1 view .LVU70
+ 323 0008 FF22     		movs	r2, #255
+ 324 000a 0021     		movs	r1, #0
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 8
+
+
+ 325              	.LVL28:
+ 326              		.loc 1 51 3 is_stmt 0 view .LVU71
+ 327 000c FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 328              	.LVL29:
+  52:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, CC_CFG, 0x19);
+ 329              		.loc 1 52 3 is_stmt 1 view .LVU72
+ 330 0010 1922     		movs	r2, #25
+ 331 0012 0B21     		movs	r1, #11
+ 332 0014 2046     		mov	r0, r4
+ 333 0016 FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 334              	.LVL30:
+  53:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, SYS_CTRL1, 0x10);
+ 335              		.loc 1 53 3 view .LVU73
+ 336 001a 1022     		movs	r2, #16
+ 337 001c 0421     		movs	r1, #4
+ 338 001e 2046     		mov	r0, r4
+ 339 0020 FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 340              	.LVL31:
+  54:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, SYS_CTRL2, 0xC3);
+ 341              		.loc 1 54 3 view .LVU74
+ 342 0024 C322     		movs	r2, #195
+ 343 0026 0521     		movs	r1, #5
+ 344 0028 2046     		mov	r0, r4
+ 345 002a FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 346              	.LVL32:
+  55:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  56:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t adc_gain_reg[2];
+ 347              		.loc 1 56 3 view .LVU75
+  57:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_READ_BYTE(bq, ADCGAIN1, &adc_gain_reg[0]);
+ 348              		.loc 1 57 3 view .LVU76
+ 349 002e 01AA     		add	r2, sp, #4
+ 350 0030 5021     		movs	r1, #80
+ 351 0032 2046     		mov	r0, r4
+ 352 0034 FFF7FEFF 		bl	_I2C_READ_BYTE
+ 353              	.LVL33:
+  58:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_READ_BYTE(bq, ADCGAIN2, &adc_gain_reg[1]);
+ 354              		.loc 1 58 3 view .LVU77
+ 355 0038 0DF10502 		add	r2, sp, #5
+ 356 003c 5921     		movs	r1, #89
+ 357 003e 2046     		mov	r0, r4
+ 358 0040 FFF7FEFF 		bl	_I2C_READ_BYTE
+ 359              	.LVL34:
+  59:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t adc_gain =
+ 360              		.loc 1 59 3 view .LVU78
+  60:CAW-PACKAGES/BQ76920/bq76920.c ****       (((adc_gain_reg[1] & 0xE0) >> 5) | ((adc_gain_reg[0] & 0X0C) << 1));
+ 361              		.loc 1 60 22 is_stmt 0 view .LVU79
+ 362 0044 9DF80520 		ldrb	r2, [sp, #5]	@ zero_extendqisi2
+ 363              		.loc 1 60 56 view .LVU80
+ 364 0048 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 365              		.loc 1 60 68 view .LVU81
+ 366 004c 5B00     		lsls	r3, r3, #1
+ 367 004e 03F01803 		and	r3, r3, #24
+  59:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t adc_gain =
+ 368              		.loc 1 59 11 view .LVU82
+ 369 0052 43EA5213 		orr	r3, r3, r2, lsr #5
+ 370              	.LVL35:
+  61:CAW-PACKAGES/BQ76920/bq76920.c ****   bq->GAIN = adc_gain + BQ76920_GAIN_BASE;
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 9
+
+
+ 371              		.loc 1 61 3 is_stmt 1 view .LVU83
+ 372              		.loc 1 61 23 is_stmt 0 view .LVU84
+ 373 0056 03F26D13 		addw	r3, r3, #365
+ 374              	.LVL36:
+ 375              		.loc 1 61 12 view .LVU85
+ 376 005a A380     		strh	r3, [r4, #4]	@ movhi
+  62:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  63:CAW-PACKAGES/BQ76920/bq76920.c ****   // 获取ADCOFFSET
+  64:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_READ_BYTE(bq, ADCOFFSET, &(bq->OFFSET));
+ 377              		.loc 1 64 3 is_stmt 1 view .LVU86
+ 378 005c A21D     		adds	r2, r4, #6
+ 379 005e 5121     		movs	r1, #81
+ 380 0060 2046     		mov	r0, r4
+ 381 0062 FFF7FEFF 		bl	_I2C_READ_BYTE
+ 382              	.LVL37:
+  65:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  66:CAW-PACKAGES/BQ76920/bq76920.c ****   // 设置PROTECT1
+  67:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t protect1_reg;
+ 383              		.loc 1 67 3 view .LVU87
+  68:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_READ_BYTE(bq, PROTECT1, &protect1_reg);
+ 384              		.loc 1 68 3 view .LVU88
+ 385 0066 0DF10302 		add	r2, sp, #3
+ 386 006a 0621     		movs	r1, #6
+ 387 006c 2046     		mov	r0, r4
+ 388 006e FFF7FEFF 		bl	_I2C_READ_BYTE
+ 389              	.LVL38:
+  69:CAW-PACKAGES/BQ76920/bq76920.c ****   protect1_reg = protect1_reg | (SCD_DELAY_100us << 3);
+ 390              		.loc 1 69 3 view .LVU89
+ 391              		.loc 1 69 16 is_stmt 0 view .LVU90
+ 392 0072 9DF80320 		ldrb	r2, [sp, #3]	@ zero_extendqisi2
+ 393 0076 42F00802 		orr	r2, r2, #8
+ 394 007a 8DF80320 		strb	r2, [sp, #3]
+  70:CAW-PACKAGES/BQ76920/bq76920.c ****   protect1_reg = protect1_reg | SCD_THRESHOLD_44mV;
+ 395              		.loc 1 70 3 is_stmt 1 view .LVU91
+ 396              		.loc 1 70 16 is_stmt 0 view .LVU92
+ 397 007e 42F00202 		orr	r2, r2, #2
+ 398 0082 8DF80320 		strb	r2, [sp, #3]
+  71:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, PROTECT1, protect1_reg);
+ 399              		.loc 1 71 3 is_stmt 1 view .LVU93
+ 400 0086 0621     		movs	r1, #6
+ 401 0088 2046     		mov	r0, r4
+ 402 008a FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 403              	.LVL39:
+  72:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  73:CAW-PACKAGES/BQ76920/bq76920.c ****   // 设置PROTECT2
+  74:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t protect2_reg;
+ 404              		.loc 1 74 3 view .LVU94
+  75:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_READ_BYTE(bq, PROTECT2, &protect2_reg);
+ 405              		.loc 1 75 3 view .LVU95
+ 406 008e 0DF10202 		add	r2, sp, #2
+ 407 0092 0721     		movs	r1, #7
+ 408 0094 2046     		mov	r0, r4
+ 409 0096 FFF7FEFF 		bl	_I2C_READ_BYTE
+ 410              	.LVL40:
+  76:CAW-PACKAGES/BQ76920/bq76920.c ****   protect2_reg = protect2_reg | (OCD_DELAY_160ms << 4);
+ 411              		.loc 1 76 3 view .LVU96
+ 412              		.loc 1 76 16 is_stmt 0 view .LVU97
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 10
+
+
+ 413 009a 9DF80220 		ldrb	r2, [sp, #2]	@ zero_extendqisi2
+ 414 009e 42F04002 		orr	r2, r2, #64
+ 415 00a2 8DF80220 		strb	r2, [sp, #2]
+  77:CAW-PACKAGES/BQ76920/bq76920.c ****   protect2_reg = protect2_reg | OCD_THRESHOLD_8mV;
+ 416              		.loc 1 77 3 is_stmt 1 view .LVU98
+  78:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, PROTECT2, protect2_reg);
+ 417              		.loc 1 78 3 view .LVU99
+ 418 00a6 0721     		movs	r1, #7
+ 419 00a8 2046     		mov	r0, r4
+ 420 00aa FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 421              	.LVL41:
+  79:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  80:CAW-PACKAGES/BQ76920/bq76920.c ****   // 设置PROTECT3
+  81:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t protect3_reg;
+ 422              		.loc 1 81 3 view .LVU100
+  82:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_READ_BYTE(bq, PROTECT3, &protect3_reg);
+ 423              		.loc 1 82 3 view .LVU101
+ 424 00ae 0DF10102 		add	r2, sp, #1
+ 425 00b2 0821     		movs	r1, #8
+ 426 00b4 2046     		mov	r0, r4
+ 427 00b6 FFF7FEFF 		bl	_I2C_READ_BYTE
+ 428              	.LVL42:
+  83:CAW-PACKAGES/BQ76920/bq76920.c ****   protect3_reg = protect3_reg | (UV_DELAY_4s << 6);
+ 429              		.loc 1 83 3 view .LVU102
+ 430              		.loc 1 83 16 is_stmt 0 view .LVU103
+ 431 00ba 9DF80120 		ldrb	r2, [sp, #1]	@ zero_extendqisi2
+ 432 00be 42F04002 		orr	r2, r2, #64
+ 433 00c2 8DF80120 		strb	r2, [sp, #1]
+  84:CAW-PACKAGES/BQ76920/bq76920.c ****   protect3_reg = protect3_reg | (OV_DELAY_4s << 4);
+ 434              		.loc 1 84 3 is_stmt 1 view .LVU104
+ 435              		.loc 1 84 16 is_stmt 0 view .LVU105
+ 436 00c6 42F02002 		orr	r2, r2, #32
+ 437 00ca 8DF80120 		strb	r2, [sp, #1]
+  85:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, PROTECT3, protect3_reg);
+ 438              		.loc 1 85 3 is_stmt 1 view .LVU106
+ 439 00ce 0821     		movs	r1, #8
+ 440 00d0 2046     		mov	r0, r4
+ 441 00d2 FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 442              	.LVL43:
+  86:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  87:CAW-PACKAGES/BQ76920/bq76920.c ****   // 配置过压阈值
+  88:CAW-PACKAGES/BQ76920/bq76920.c ****   uint16_t OV = BQ76920_OV_TARGET * 1000.0;  // to mV
+ 443              		.loc 1 88 3 view .LVU107
+  89:CAW-PACKAGES/BQ76920/bq76920.c ****   uint16_t OV_tmp = (float)(OV - bq->OFFSET) / (float)(bq->GAIN / 1000.0);
+ 444              		.loc 1 89 3 view .LVU108
+ 445              		.loc 1 89 36 is_stmt 0 view .LVU109
+ 446 00d6 E088     		ldrh	r0, [r4, #6]
+ 447              		.loc 1 89 21 view .LVU110
+ 448 00d8 C0F58250 		rsb	r0, r0, #4160
+ 449 00dc 1430     		adds	r0, r0, #20
+ 450 00de FFF7FEFF 		bl	__aeabi_i2f
+ 451              	.LVL44:
+ 452 00e2 0546     		mov	r5, r0
+ 453              		.loc 1 89 65 view .LVU111
+ 454 00e4 A088     		ldrh	r0, [r4, #4]
+ 455 00e6 FFF7FEFF 		bl	__aeabi_i2d
+ 456              	.LVL45:
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 11
+
+
+ 457 00ea 0022     		movs	r2, #0
+ 458 00ec 174B     		ldr	r3, .L23
+ 459 00ee FFF7FEFF 		bl	__aeabi_ddiv
+ 460              	.LVL46:
+ 461              		.loc 1 89 48 view .LVU112
+ 462 00f2 FFF7FEFF 		bl	__aeabi_d2f
+ 463              	.LVL47:
+ 464 00f6 0146     		mov	r1, r0
+ 465              		.loc 1 89 46 view .LVU113
+ 466 00f8 2846     		mov	r0, r5
+ 467 00fa FFF7FEFF 		bl	__aeabi_fdiv
+ 468              	.LVL48:
+ 469              		.loc 1 89 12 view .LVU114
+ 470 00fe FFF7FEFF 		bl	__aeabi_f2uiz
+ 471              	.LVL49:
+  90:CAW-PACKAGES/BQ76920/bq76920.c ****   OV_tmp = (OV_tmp & 0x0FF0) >> 4;
+ 472              		.loc 1 90 3 is_stmt 1 view .LVU115
+  91:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t OV_TRIP_value = OV_tmp & 0xFF;
+ 473              		.loc 1 91 3 view .LVU116
+  92:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, OV_TRIP, OV_TRIP_value);
+ 474              		.loc 1 92 3 view .LVU117
+ 475 0102 C0F30712 		ubfx	r2, r0, #4, #8
+ 476 0106 0921     		movs	r1, #9
+ 477 0108 2046     		mov	r0, r4
+ 478              	.LVL50:
+ 479              		.loc 1 92 3 is_stmt 0 view .LVU118
+ 480 010a FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 481              	.LVL51:
+  93:CAW-PACKAGES/BQ76920/bq76920.c **** 
+  94:CAW-PACKAGES/BQ76920/bq76920.c ****   // 配置欠压阈值
+  95:CAW-PACKAGES/BQ76920/bq76920.c ****   uint16_t UV = BQ76920_UV_TARGET * 1000.0;  // to mV
+ 482              		.loc 1 95 3 is_stmt 1 view .LVU119
+  96:CAW-PACKAGES/BQ76920/bq76920.c ****   uint16_t UV_tmp = (float)(UV - bq->OFFSET) / (float)(bq->GAIN / 1000.0);
+ 483              		.loc 1 96 3 view .LVU120
+ 484              		.loc 1 96 36 is_stmt 0 view .LVU121
+ 485 010e E088     		ldrh	r0, [r4, #6]
+ 486              		.loc 1 96 21 view .LVU122
+ 487 0110 C0F52860 		rsb	r0, r0, #2688
+ 488 0114 0C30     		adds	r0, r0, #12
+ 489 0116 FFF7FEFF 		bl	__aeabi_i2f
+ 490              	.LVL52:
+ 491 011a 0546     		mov	r5, r0
+ 492              		.loc 1 96 65 view .LVU123
+ 493 011c A088     		ldrh	r0, [r4, #4]
+ 494 011e FFF7FEFF 		bl	__aeabi_i2d
+ 495              	.LVL53:
+ 496 0122 0022     		movs	r2, #0
+ 497 0124 094B     		ldr	r3, .L23
+ 498 0126 FFF7FEFF 		bl	__aeabi_ddiv
+ 499              	.LVL54:
+ 500              		.loc 1 96 48 view .LVU124
+ 501 012a FFF7FEFF 		bl	__aeabi_d2f
+ 502              	.LVL55:
+ 503 012e 0146     		mov	r1, r0
+ 504              		.loc 1 96 46 view .LVU125
+ 505 0130 2846     		mov	r0, r5
+ 506 0132 FFF7FEFF 		bl	__aeabi_fdiv
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 12
+
+
+ 507              	.LVL56:
+ 508              		.loc 1 96 12 view .LVU126
+ 509 0136 FFF7FEFF 		bl	__aeabi_f2uiz
+ 510              	.LVL57:
+  97:CAW-PACKAGES/BQ76920/bq76920.c ****   UV_tmp = (UV_tmp & 0x0FF0) >> 4;
+ 511              		.loc 1 97 3 is_stmt 1 view .LVU127
+  98:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t UV_TRIP_value = UV_tmp & 0xFF;
+ 512              		.loc 1 98 3 view .LVU128
+  99:CAW-PACKAGES/BQ76920/bq76920.c ****   _I2C_WRITE_BYTE(bq, UV_TRIP, UV_TRIP_value);
+ 513              		.loc 1 99 3 view .LVU129
+ 514 013a C0F30712 		ubfx	r2, r0, #4, #8
+ 515 013e 0A21     		movs	r1, #10
+ 516 0140 2046     		mov	r0, r4
+ 517              	.LVL58:
+ 518              		.loc 1 99 3 is_stmt 0 view .LVU130
+ 519 0142 FFF7FEFF 		bl	_I2C_WRITE_BYTE
+ 520              	.LVL59:
+ 100:CAW-PACKAGES/BQ76920/bq76920.c ****   return 0;
+ 521              		.loc 1 100 3 is_stmt 1 view .LVU131
+ 101:CAW-PACKAGES/BQ76920/bq76920.c **** }
+ 522              		.loc 1 101 1 is_stmt 0 view .LVU132
+ 523 0146 0020     		movs	r0, #0
+ 524 0148 03B0     		add	sp, sp, #12
+ 525              	.LCFI10:
+ 526              		.cfi_def_cfa_offset 12
+ 527              		@ sp needed
+ 528 014a 30BD     		pop	{r4, r5, pc}
+ 529              	.LVL60:
+ 530              	.L24:
+ 531              		.loc 1 101 1 view .LVU133
+ 532              		.align	2
+ 533              	.L23:
+ 534 014c 00408F40 		.word	1083129856
+ 535              		.cfi_endproc
+ 536              	.LFE68:
+ 538              		.section	.text.BQ76920_SysStat,"ax",%progbits
+ 539              		.align	1
+ 540              		.global	BQ76920_SysStat
+ 541              		.syntax unified
+ 542              		.thumb
+ 543              		.thumb_func
+ 545              	BQ76920_SysStat:
+ 546              	.LVL61:
+ 547              	.LFB69:
+ 102:CAW-PACKAGES/BQ76920/bq76920.c **** 
+ 103:CAW-PACKAGES/BQ76920/bq76920.c **** int BQ76920_SysStat(BQ76920_T* bq, BQ76920_SYS_STAT_T* st) {
+ 548              		.loc 1 103 60 is_stmt 1 view -0
+ 549              		.cfi_startproc
+ 550              		@ args = 0, pretend = 0, frame = 8
+ 551              		@ frame_needed = 0, uses_anonymous_args = 0
+ 552              		.loc 1 103 60 is_stmt 0 view .LVU135
+ 553 0000 10B5     		push	{r4, lr}
+ 554              	.LCFI11:
+ 555              		.cfi_def_cfa_offset 8
+ 556              		.cfi_offset 4, -8
+ 557              		.cfi_offset 14, -4
+ 558 0002 82B0     		sub	sp, sp, #8
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 13
+
+
+ 559              	.LCFI12:
+ 560              		.cfi_def_cfa_offset 16
+ 561 0004 0C46     		mov	r4, r1
+ 104:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t data;
+ 562              		.loc 1 104 3 is_stmt 1 view .LVU136
+ 105:CAW-PACKAGES/BQ76920/bq76920.c ****   if (CAW_OK != _I2C_READ_BYTE(bq, SYS_STAT, &data)) {
+ 563              		.loc 1 105 3 view .LVU137
+ 564              		.loc 1 105 17 is_stmt 0 view .LVU138
+ 565 0006 0DF10702 		add	r2, sp, #7
+ 566 000a 0021     		movs	r1, #0
+ 567              	.LVL62:
+ 568              		.loc 1 105 17 view .LVU139
+ 569 000c FFF7FEFF 		bl	_I2C_READ_BYTE
+ 570              	.LVL63:
+ 571              		.loc 1 105 6 view .LVU140
+ 572 0010 D0B9     		cbnz	r0, .L27
+ 106:CAW-PACKAGES/BQ76920/bq76920.c ****     return CAW_ERR;
+ 107:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 108:CAW-PACKAGES/BQ76920/bq76920.c ****   st->OCD = data & 0x01;
+ 573              		.loc 1 108 3 is_stmt 1 view .LVU141
+ 574              		.loc 1 108 18 is_stmt 0 view .LVU142
+ 575 0012 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 576 0016 03F00102 		and	r2, r3, #1
+ 577              		.loc 1 108 11 view .LVU143
+ 578 001a 2270     		strb	r2, [r4]
+ 109:CAW-PACKAGES/BQ76920/bq76920.c ****   st->SCD = (data >> 1) & 0x01;
+ 579              		.loc 1 109 3 is_stmt 1 view .LVU144
+ 580              		.loc 1 109 25 is_stmt 0 view .LVU145
+ 581 001c C3F34002 		ubfx	r2, r3, #1, #1
+ 582              		.loc 1 109 11 view .LVU146
+ 583 0020 6270     		strb	r2, [r4, #1]
+ 110:CAW-PACKAGES/BQ76920/bq76920.c ****   st->OV = (data >> 2) & 0x01;
+ 584              		.loc 1 110 3 is_stmt 1 view .LVU147
+ 585              		.loc 1 110 24 is_stmt 0 view .LVU148
+ 586 0022 C3F38002 		ubfx	r2, r3, #2, #1
+ 587              		.loc 1 110 10 view .LVU149
+ 588 0026 A270     		strb	r2, [r4, #2]
+ 111:CAW-PACKAGES/BQ76920/bq76920.c ****   st->UV = (data >> 3) & 0x01;
+ 589              		.loc 1 111 3 is_stmt 1 view .LVU150
+ 590              		.loc 1 111 24 is_stmt 0 view .LVU151
+ 591 0028 C3F3C002 		ubfx	r2, r3, #3, #1
+ 592              		.loc 1 111 10 view .LVU152
+ 593 002c E270     		strb	r2, [r4, #3]
+ 112:CAW-PACKAGES/BQ76920/bq76920.c ****   st->OVRD_ALERT = (data >> 4) & 0x01;
+ 594              		.loc 1 112 3 is_stmt 1 view .LVU153
+ 595              		.loc 1 112 32 is_stmt 0 view .LVU154
+ 596 002e C3F30012 		ubfx	r2, r3, #4, #1
+ 597              		.loc 1 112 18 view .LVU155
+ 598 0032 2271     		strb	r2, [r4, #4]
+ 113:CAW-PACKAGES/BQ76920/bq76920.c ****   st->DEVICE_XREADY = (data >> 5) & 0x01;
+ 599              		.loc 1 113 3 is_stmt 1 view .LVU156
+ 600              		.loc 1 113 35 is_stmt 0 view .LVU157
+ 601 0034 C3F34012 		ubfx	r2, r3, #5, #1
+ 602              		.loc 1 113 21 view .LVU158
+ 603 0038 6271     		strb	r2, [r4, #5]
+ 114:CAW-PACKAGES/BQ76920/bq76920.c ****   st->RSVD = (data >> 6) & 0x01;
+ 604              		.loc 1 114 3 is_stmt 1 view .LVU159
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 14
+
+
+ 605              		.loc 1 114 26 is_stmt 0 view .LVU160
+ 606 003a C3F38012 		ubfx	r2, r3, #6, #1
+ 607              		.loc 1 114 12 view .LVU161
+ 608 003e A271     		strb	r2, [r4, #6]
+ 115:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CC_READY = (data >> 7) & 0x01;
+ 609              		.loc 1 115 3 is_stmt 1 view .LVU162
+ 610              		.loc 1 115 16 is_stmt 0 view .LVU163
+ 611 0040 DB09     		lsrs	r3, r3, #7
+ 612 0042 E371     		strb	r3, [r4, #7]
+ 116:CAW-PACKAGES/BQ76920/bq76920.c ****   return CAW_OK;
+ 613              		.loc 1 116 3 is_stmt 1 view .LVU164
+ 614              	.L25:
+ 117:CAW-PACKAGES/BQ76920/bq76920.c **** }
+ 615              		.loc 1 117 1 is_stmt 0 view .LVU165
+ 616 0044 02B0     		add	sp, sp, #8
+ 617              	.LCFI13:
+ 618              		.cfi_remember_state
+ 619              		.cfi_def_cfa_offset 8
+ 620              		@ sp needed
+ 621 0046 10BD     		pop	{r4, pc}
+ 622              	.LVL64:
+ 623              	.L27:
+ 624              	.LCFI14:
+ 625              		.cfi_restore_state
+ 106:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 626              		.loc 1 106 12 view .LVU166
+ 627 0048 4FF0FF30 		mov	r0, #-1
+ 628 004c FAE7     		b	.L25
+ 629              		.cfi_endproc
+ 630              	.LFE69:
+ 632              		.section	.text.BQ76920_SysCtrl2,"ax",%progbits
+ 633              		.align	1
+ 634              		.global	BQ76920_SysCtrl2
+ 635              		.syntax unified
+ 636              		.thumb
+ 637              		.thumb_func
+ 639              	BQ76920_SysCtrl2:
+ 640              	.LVL65:
+ 641              	.LFB70:
+ 118:CAW-PACKAGES/BQ76920/bq76920.c **** 
+ 119:CAW-PACKAGES/BQ76920/bq76920.c **** int BQ76920_SysCtrl2(BQ76920_T* bq, BQ76920_SYS_CTRL2_T* st) {
+ 642              		.loc 1 119 62 is_stmt 1 view -0
+ 643              		.cfi_startproc
+ 644              		@ args = 0, pretend = 0, frame = 8
+ 645              		@ frame_needed = 0, uses_anonymous_args = 0
+ 646              		.loc 1 119 62 is_stmt 0 view .LVU168
+ 647 0000 10B5     		push	{r4, lr}
+ 648              	.LCFI15:
+ 649              		.cfi_def_cfa_offset 8
+ 650              		.cfi_offset 4, -8
+ 651              		.cfi_offset 14, -4
+ 652 0002 82B0     		sub	sp, sp, #8
+ 653              	.LCFI16:
+ 654              		.cfi_def_cfa_offset 16
+ 655 0004 0C46     		mov	r4, r1
+ 120:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t data;
+ 656              		.loc 1 120 3 is_stmt 1 view .LVU169
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 15
+
+
+ 121:CAW-PACKAGES/BQ76920/bq76920.c ****   if (CAW_OK != _I2C_READ_BYTE(bq, SYS_CTRL2, &data)) {
+ 657              		.loc 1 121 3 view .LVU170
+ 658              		.loc 1 121 17 is_stmt 0 view .LVU171
+ 659 0006 0DF10702 		add	r2, sp, #7
+ 660 000a 0521     		movs	r1, #5
+ 661              	.LVL66:
+ 662              		.loc 1 121 17 view .LVU172
+ 663 000c FFF7FEFF 		bl	_I2C_READ_BYTE
+ 664              	.LVL67:
+ 665              		.loc 1 121 6 view .LVU173
+ 666 0010 D0B9     		cbnz	r0, .L31
+ 122:CAW-PACKAGES/BQ76920/bq76920.c ****     return CAW_ERR;
+ 123:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 124:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CHG_ON = data & 0x01;
+ 667              		.loc 1 124 3 is_stmt 1 view .LVU174
+ 668              		.loc 1 124 21 is_stmt 0 view .LVU175
+ 669 0012 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 670 0016 03F00102 		and	r2, r3, #1
+ 671              		.loc 1 124 14 view .LVU176
+ 672 001a 2270     		strb	r2, [r4]
+ 125:CAW-PACKAGES/BQ76920/bq76920.c ****   st->DSG_ON = (data >> 1) & 0x01;
+ 673              		.loc 1 125 3 is_stmt 1 view .LVU177
+ 674              		.loc 1 125 28 is_stmt 0 view .LVU178
+ 675 001c C3F34002 		ubfx	r2, r3, #1, #1
+ 676              		.loc 1 125 14 view .LVU179
+ 677 0020 6270     		strb	r2, [r4, #1]
+ 126:CAW-PACKAGES/BQ76920/bq76920.c ****   st->RSVD_0 = (data >> 2) & 0x01;
+ 678              		.loc 1 126 3 is_stmt 1 view .LVU180
+ 679              		.loc 1 126 28 is_stmt 0 view .LVU181
+ 680 0022 C3F38002 		ubfx	r2, r3, #2, #1
+ 681              		.loc 1 126 14 view .LVU182
+ 682 0026 A270     		strb	r2, [r4, #2]
+ 127:CAW-PACKAGES/BQ76920/bq76920.c ****   st->RSVD_1 = (data >> 3) & 0x01;
+ 683              		.loc 1 127 3 is_stmt 1 view .LVU183
+ 684              		.loc 1 127 28 is_stmt 0 view .LVU184
+ 685 0028 C3F3C002 		ubfx	r2, r3, #3, #1
+ 686              		.loc 1 127 14 view .LVU185
+ 687 002c E270     		strb	r2, [r4, #3]
+ 128:CAW-PACKAGES/BQ76920/bq76920.c ****   st->RSVD_2 = (data >> 4) & 0x01;
+ 688              		.loc 1 128 3 is_stmt 1 view .LVU186
+ 689              		.loc 1 128 28 is_stmt 0 view .LVU187
+ 690 002e C3F30012 		ubfx	r2, r3, #4, #1
+ 691              		.loc 1 128 14 view .LVU188
+ 692 0032 2271     		strb	r2, [r4, #4]
+ 129:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CC_ONESHOT = (data >> 5) & 0x01;
+ 693              		.loc 1 129 3 is_stmt 1 view .LVU189
+ 694              		.loc 1 129 32 is_stmt 0 view .LVU190
+ 695 0034 C3F34012 		ubfx	r2, r3, #5, #1
+ 696              		.loc 1 129 18 view .LVU191
+ 697 0038 6271     		strb	r2, [r4, #5]
+ 130:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CC_EN = (data >> 6) & 0x01;
+ 698              		.loc 1 130 3 is_stmt 1 view .LVU192
+ 699              		.loc 1 130 27 is_stmt 0 view .LVU193
+ 700 003a C3F38012 		ubfx	r2, r3, #6, #1
+ 701              		.loc 1 130 13 view .LVU194
+ 702 003e A271     		strb	r2, [r4, #6]
+ 131:CAW-PACKAGES/BQ76920/bq76920.c ****   st->DELAY_DIS = (data >> 7) & 0x01;
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 16
+
+
+ 703              		.loc 1 131 3 is_stmt 1 view .LVU195
+ 704              		.loc 1 131 17 is_stmt 0 view .LVU196
+ 705 0040 DB09     		lsrs	r3, r3, #7
+ 706 0042 E371     		strb	r3, [r4, #7]
+ 132:CAW-PACKAGES/BQ76920/bq76920.c ****   return CAW_OK;
+ 707              		.loc 1 132 3 is_stmt 1 view .LVU197
+ 708              	.L29:
+ 133:CAW-PACKAGES/BQ76920/bq76920.c **** }
+ 709              		.loc 1 133 1 is_stmt 0 view .LVU198
+ 710 0044 02B0     		add	sp, sp, #8
+ 711              	.LCFI17:
+ 712              		.cfi_remember_state
+ 713              		.cfi_def_cfa_offset 8
+ 714              		@ sp needed
+ 715 0046 10BD     		pop	{r4, pc}
+ 716              	.LVL68:
+ 717              	.L31:
+ 718              	.LCFI18:
+ 719              		.cfi_restore_state
+ 122:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 720              		.loc 1 122 12 view .LVU199
+ 721 0048 4FF0FF30 		mov	r0, #-1
+ 722 004c FAE7     		b	.L29
+ 723              		.cfi_endproc
+ 724              	.LFE70:
+ 726              		.section	.text.BQ76920_CellBal1,"ax",%progbits
+ 727              		.align	1
+ 728              		.global	BQ76920_CellBal1
+ 729              		.syntax unified
+ 730              		.thumb
+ 731              		.thumb_func
+ 733              	BQ76920_CellBal1:
+ 734              	.LVL69:
+ 735              	.LFB71:
+ 134:CAW-PACKAGES/BQ76920/bq76920.c **** 
+ 135:CAW-PACKAGES/BQ76920/bq76920.c **** /**
+ 136:CAW-PACKAGES/BQ76920/bq76920.c ****  * @description: 获取均衡状态
+ 137:CAW-PACKAGES/BQ76920/bq76920.c ****  * @param {BQ76920_T*} bq
+ 138:CAW-PACKAGES/BQ76920/bq76920.c ****  * @param {BQ76920_CELLBAL1_T*} st
+ 139:CAW-PACKAGES/BQ76920/bq76920.c ****  * @return {*}
+ 140:CAW-PACKAGES/BQ76920/bq76920.c ****  */
+ 141:CAW-PACKAGES/BQ76920/bq76920.c **** int BQ76920_CellBal1(BQ76920_T* bq, BQ76920_CELLBAL1_T* st) {
+ 736              		.loc 1 141 61 is_stmt 1 view -0
+ 737              		.cfi_startproc
+ 738              		@ args = 0, pretend = 0, frame = 8
+ 739              		@ frame_needed = 0, uses_anonymous_args = 0
+ 740              		.loc 1 141 61 is_stmt 0 view .LVU201
+ 741 0000 10B5     		push	{r4, lr}
+ 742              	.LCFI19:
+ 743              		.cfi_def_cfa_offset 8
+ 744              		.cfi_offset 4, -8
+ 745              		.cfi_offset 14, -4
+ 746 0002 82B0     		sub	sp, sp, #8
+ 747              	.LCFI20:
+ 748              		.cfi_def_cfa_offset 16
+ 749 0004 0C46     		mov	r4, r1
+ 142:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t data;
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 17
+
+
+ 750              		.loc 1 142 3 is_stmt 1 view .LVU202
+ 143:CAW-PACKAGES/BQ76920/bq76920.c ****   if (CAW_OK != _I2C_READ_BYTE(bq, CELLBAL1, &data)) {
+ 751              		.loc 1 143 3 view .LVU203
+ 752              		.loc 1 143 17 is_stmt 0 view .LVU204
+ 753 0006 0DF10702 		add	r2, sp, #7
+ 754 000a 0121     		movs	r1, #1
+ 755              	.LVL70:
+ 756              		.loc 1 143 17 view .LVU205
+ 757 000c FFF7FEFF 		bl	_I2C_READ_BYTE
+ 758              	.LVL71:
+ 759              		.loc 1 143 6 view .LVU206
+ 760 0010 90B9     		cbnz	r0, .L35
+ 144:CAW-PACKAGES/BQ76920/bq76920.c ****     return CAW_ERR;
+ 145:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 146:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CB1 = data & 0x01;
+ 761              		.loc 1 146 3 is_stmt 1 view .LVU207
+ 762              		.loc 1 146 18 is_stmt 0 view .LVU208
+ 763 0012 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 764 0016 03F00102 		and	r2, r3, #1
+ 765              		.loc 1 146 11 view .LVU209
+ 766 001a 2270     		strb	r2, [r4]
+ 147:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CB2 = (data >> 1) & 0x01;
+ 767              		.loc 1 147 3 is_stmt 1 view .LVU210
+ 768              		.loc 1 147 25 is_stmt 0 view .LVU211
+ 769 001c C3F34002 		ubfx	r2, r3, #1, #1
+ 770              		.loc 1 147 11 view .LVU212
+ 771 0020 6270     		strb	r2, [r4, #1]
+ 148:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CB3 = (data >> 2) & 0x01;
+ 772              		.loc 1 148 3 is_stmt 1 view .LVU213
+ 773              		.loc 1 148 25 is_stmt 0 view .LVU214
+ 774 0022 C3F38002 		ubfx	r2, r3, #2, #1
+ 775              		.loc 1 148 11 view .LVU215
+ 776 0026 A270     		strb	r2, [r4, #2]
+ 149:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CB4 = (data >> 3) & 0x01;
+ 777              		.loc 1 149 3 is_stmt 1 view .LVU216
+ 778              		.loc 1 149 25 is_stmt 0 view .LVU217
+ 779 0028 C3F3C002 		ubfx	r2, r3, #3, #1
+ 780              		.loc 1 149 11 view .LVU218
+ 781 002c E270     		strb	r2, [r4, #3]
+ 150:CAW-PACKAGES/BQ76920/bq76920.c ****   st->CB5 = (data >> 4) & 0x01;
+ 782              		.loc 1 150 3 is_stmt 1 view .LVU219
+ 783              		.loc 1 150 25 is_stmt 0 view .LVU220
+ 784 002e C3F30013 		ubfx	r3, r3, #4, #1
+ 785              		.loc 1 150 11 view .LVU221
+ 786 0032 2371     		strb	r3, [r4, #4]
+ 151:CAW-PACKAGES/BQ76920/bq76920.c ****   return CAW_OK;
+ 787              		.loc 1 151 3 is_stmt 1 view .LVU222
+ 788              	.L33:
+ 152:CAW-PACKAGES/BQ76920/bq76920.c **** }
+ 789              		.loc 1 152 1 is_stmt 0 view .LVU223
+ 790 0034 02B0     		add	sp, sp, #8
+ 791              	.LCFI21:
+ 792              		.cfi_remember_state
+ 793              		.cfi_def_cfa_offset 8
+ 794              		@ sp needed
+ 795 0036 10BD     		pop	{r4, pc}
+ 796              	.LVL72:
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 18
+
+
+ 797              	.L35:
+ 798              	.LCFI22:
+ 799              		.cfi_restore_state
+ 144:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 800              		.loc 1 144 12 view .LVU224
+ 801 0038 4FF0FF30 		mov	r0, #-1
+ 802 003c FAE7     		b	.L33
+ 803              		.cfi_endproc
+ 804              	.LFE71:
+ 806              		.global	__aeabi_ui2f
+ 807              		.global	__aeabi_fmul
+ 808              		.global	__aeabi_fadd
+ 809              		.global	__aeabi_f2d
+ 810              		.global	__aeabi_dmul
+ 811              		.section	.text.BQ76920_UpdateCellVoltage,"ax",%progbits
+ 812              		.align	1
+ 813              		.global	BQ76920_UpdateCellVoltage
+ 814              		.syntax unified
+ 815              		.thumb
+ 816              		.thumb_func
+ 818              	BQ76920_UpdateCellVoltage:
+ 819              	.LVL73:
+ 820              	.LFB72:
+ 153:CAW-PACKAGES/BQ76920/bq76920.c **** 
+ 154:CAW-PACKAGES/BQ76920/bq76920.c **** /**
+ 155:CAW-PACKAGES/BQ76920/bq76920.c ****  * @description: 更新电压数据
+ 156:CAW-PACKAGES/BQ76920/bq76920.c ****  * @param {BQ76920_T*} bq
+ 157:CAW-PACKAGES/BQ76920/bq76920.c ****  * @return {*}
+ 158:CAW-PACKAGES/BQ76920/bq76920.c ****  */
+ 159:CAW-PACKAGES/BQ76920/bq76920.c **** int BQ76920_UpdateCellVoltage(BQ76920_T* bq) {
+ 821              		.loc 1 159 46 is_stmt 1 view -0
+ 822              		.cfi_startproc
+ 823              		@ args = 0, pretend = 0, frame = 8
+ 824              		@ frame_needed = 0, uses_anonymous_args = 0
+ 825              		.loc 1 159 46 is_stmt 0 view .LVU226
+ 826 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 827              	.LCFI23:
+ 828              		.cfi_def_cfa_offset 20
+ 829              		.cfi_offset 4, -20
+ 830              		.cfi_offset 5, -16
+ 831              		.cfi_offset 6, -12
+ 832              		.cfi_offset 7, -8
+ 833              		.cfi_offset 14, -4
+ 834 0002 83B0     		sub	sp, sp, #12
+ 835              	.LCFI24:
+ 836              		.cfi_def_cfa_offset 32
+ 837 0004 0546     		mov	r5, r0
+ 160:CAW-PACKAGES/BQ76920/bq76920.c ****   uint8_t reg[2];
+ 838              		.loc 1 160 3 is_stmt 1 view .LVU227
+ 161:CAW-PACKAGES/BQ76920/bq76920.c **** 
+ 162:CAW-PACKAGES/BQ76920/bq76920.c ****   uint16_t VC_base = VC1_HI;
+ 839              		.loc 1 162 3 view .LVU228
+ 840              	.LVL74:
+ 163:CAW-PACKAGES/BQ76920/bq76920.c **** 
+ 164:CAW-PACKAGES/BQ76920/bq76920.c ****   for (int i = 0; i < 5; i++) {
+ 841              		.loc 1 164 3 view .LVU229
+ 842              	.LBB2:
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 19
+
+
+ 843              		.loc 1 164 8 view .LVU230
+ 844              		.loc 1 164 12 is_stmt 0 view .LVU231
+ 845 0006 0026     		movs	r6, #0
+ 846              		.loc 1 164 3 view .LVU232
+ 847 0008 37E0     		b	.L38
+ 848              	.LVL75:
+ 849              	.L45:
+ 850              	.LBB3:
+ 165:CAW-PACKAGES/BQ76920/bq76920.c ****     if (_I2C_READ_BYTE(bq, VC_base + i * 2, &reg[0])) {
+ 166:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 167:CAW-PACKAGES/BQ76920/bq76920.c ****     }
+ 168:CAW-PACKAGES/BQ76920/bq76920.c ****     if (_I2C_READ_BYTE(bq, VC_base + i * 2 + 1, &reg[1])) {
+ 169:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 170:CAW-PACKAGES/BQ76920/bq76920.c ****     }
+ 171:CAW-PACKAGES/BQ76920/bq76920.c ****     uint16_t v = ((reg[0] & 0x3F) << 8) | reg[1];
+ 851              		.loc 1 171 5 is_stmt 1 discriminator 2 view .LVU233
+ 852              		.loc 1 171 23 is_stmt 0 discriminator 2 view .LVU234
+ 853 000a 9DF80440 		ldrb	r4, [sp, #4]	@ zero_extendqisi2
+ 854              		.loc 1 171 35 discriminator 2 view .LVU235
+ 855 000e 2402     		lsls	r4, r4, #8
+ 856 0010 04F47C54 		and	r4, r4, #16128
+ 857              		.loc 1 171 46 discriminator 2 view .LVU236
+ 858 0014 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 859              		.loc 1 171 14 discriminator 2 view .LVU237
+ 860 0018 1C43     		orrs	r4, r4, r3
+ 861              	.LVL76:
+ 172:CAW-PACKAGES/BQ76920/bq76920.c ****     bq->CellVoltage[i] =
+ 862              		.loc 1 172 5 is_stmt 1 discriminator 2 view .LVU238
+ 173:CAW-PACKAGES/BQ76920/bq76920.c ****         ((float)(bq->GAIN / 1000.0) * (float)v + (float)(bq->OFFSET)) / 1000.0;
+ 863              		.loc 1 173 27 is_stmt 0 discriminator 2 view .LVU239
+ 864 001a A888     		ldrh	r0, [r5, #4]
+ 865 001c FFF7FEFF 		bl	__aeabi_i2d
+ 866              	.LVL77:
+ 867 0020 0022     		movs	r2, #0
+ 868 0022 294B     		ldr	r3, .L46+16
+ 869 0024 FFF7FEFF 		bl	__aeabi_ddiv
+ 870              	.LVL78:
+ 871              		.loc 1 173 10 discriminator 2 view .LVU240
+ 872 0028 FFF7FEFF 		bl	__aeabi_d2f
+ 873              	.LVL79:
+ 874 002c 0746     		mov	r7, r0
+ 875              		.loc 1 173 39 discriminator 2 view .LVU241
+ 876 002e 2046     		mov	r0, r4
+ 877 0030 FFF7FEFF 		bl	__aeabi_ui2f
+ 878              	.LVL80:
+ 879 0034 0146     		mov	r1, r0
+ 880              		.loc 1 173 37 discriminator 2 view .LVU242
+ 881 0036 3846     		mov	r0, r7
+ 882 0038 FFF7FEFF 		bl	__aeabi_fmul
+ 883              	.LVL81:
+ 884 003c 0446     		mov	r4, r0
+ 885              	.LVL82:
+ 886              		.loc 1 173 50 discriminator 2 view .LVU243
+ 887 003e E888     		ldrh	r0, [r5, #6]
+ 888 0040 FFF7FEFF 		bl	__aeabi_ui2f
+ 889              	.LVL83:
+ 890 0044 0146     		mov	r1, r0
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 20
+
+
+ 891              		.loc 1 173 48 discriminator 2 view .LVU244
+ 892 0046 2046     		mov	r0, r4
+ 893 0048 FFF7FEFF 		bl	__aeabi_fadd
+ 894              	.LVL84:
+ 895              		.loc 1 173 71 discriminator 2 view .LVU245
+ 896 004c 1F49     		ldr	r1, .L46+20
+ 897 004e FFF7FEFF 		bl	__aeabi_fdiv
+ 898              	.LVL85:
+ 172:CAW-PACKAGES/BQ76920/bq76920.c ****     bq->CellVoltage[i] =
+ 899              		.loc 1 172 24 discriminator 2 view .LVU246
+ 900 0052 B41C     		adds	r4, r6, #2
+ 901 0054 45F82400 		str	r0, [r5, r4, lsl #2]	@ float
+ 174:CAW-PACKAGES/BQ76920/bq76920.c ****     bq->CellVoltage[i] = 4.2 * bq->CellVoltage[i] / 6.275;
+ 902              		.loc 1 174 5 is_stmt 1 discriminator 2 view .LVU247
+ 903              		.loc 1 174 47 is_stmt 0 discriminator 2 view .LVU248
+ 904 0058 FFF7FEFF 		bl	__aeabi_f2d
+ 905              	.LVL86:
+ 906              		.loc 1 174 30 discriminator 2 view .LVU249
+ 907 005c 16A3     		adr	r3, .L46
+ 908 005e D3E90023 		ldrd	r2, [r3]
+ 909 0062 FFF7FEFF 		bl	__aeabi_dmul
+ 910              	.LVL87:
+ 911              		.loc 1 174 51 discriminator 2 view .LVU250
+ 912 0066 16A3     		adr	r3, .L46+8
+ 913 0068 D3E90023 		ldrd	r2, [r3]
+ 914 006c FFF7FEFF 		bl	__aeabi_ddiv
+ 915              	.LVL88:
+ 916 0070 FFF7FEFF 		bl	__aeabi_d2f
+ 917              	.LVL89:
+ 918              		.loc 1 174 24 discriminator 2 view .LVU251
+ 919 0074 45F82400 		str	r0, [r5, r4, lsl #2]	@ float
+ 920              	.LBE3:
+ 164:CAW-PACKAGES/BQ76920/bq76920.c ****     if (_I2C_READ_BYTE(bq, VC_base + i * 2, &reg[0])) {
+ 921              		.loc 1 164 26 is_stmt 1 discriminator 2 view .LVU252
+ 164:CAW-PACKAGES/BQ76920/bq76920.c ****     if (_I2C_READ_BYTE(bq, VC_base + i * 2, &reg[0])) {
+ 922              		.loc 1 164 27 is_stmt 0 discriminator 2 view .LVU253
+ 923 0078 0136     		adds	r6, r6, #1
+ 924              	.LVL90:
+ 925              	.L38:
+ 164:CAW-PACKAGES/BQ76920/bq76920.c ****     if (_I2C_READ_BYTE(bq, VC_base + i * 2, &reg[0])) {
+ 926              		.loc 1 164 19 is_stmt 1 discriminator 1 view .LVU254
+ 164:CAW-PACKAGES/BQ76920/bq76920.c ****     if (_I2C_READ_BYTE(bq, VC_base + i * 2, &reg[0])) {
+ 927              		.loc 1 164 3 is_stmt 0 discriminator 1 view .LVU255
+ 928 007a 042E     		cmp	r6, #4
+ 929 007c 16DC     		bgt	.L44
+ 930              	.LBB4:
+ 165:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 931              		.loc 1 165 5 is_stmt 1 view .LVU256
+ 165:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 932              		.loc 1 165 9 is_stmt 0 view .LVU257
+ 933 007e 7400     		lsls	r4, r6, #1
+ 934 0080 A4B2     		uxth	r4, r4
+ 935 0082 04F10C01 		add	r1, r4, #12
+ 936 0086 89B2     		uxth	r1, r1
+ 937 0088 01AA     		add	r2, sp, #4
+ 938 008a 2846     		mov	r0, r5
+ 939 008c FFF7FEFF 		bl	_I2C_READ_BYTE
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 21
+
+
+ 940              	.LVL91:
+ 165:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 941              		.loc 1 165 8 view .LVU258
+ 942 0090 78B9     		cbnz	r0, .L41
+ 168:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 943              		.loc 1 168 5 is_stmt 1 view .LVU259
+ 168:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 944              		.loc 1 168 9 is_stmt 0 view .LVU260
+ 945 0092 04F10D01 		add	r1, r4, #13
+ 946 0096 0DF10502 		add	r2, sp, #5
+ 947 009a 89B2     		uxth	r1, r1
+ 948 009c 2846     		mov	r0, r5
+ 949 009e FFF7FEFF 		bl	_I2C_READ_BYTE
+ 950              	.LVL92:
+ 168:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 951              		.loc 1 168 8 view .LVU261
+ 952 00a2 0028     		cmp	r0, #0
+ 953 00a4 B1D0     		beq	.L45
+ 169:CAW-PACKAGES/BQ76920/bq76920.c ****     }
+ 954              		.loc 1 169 14 view .LVU262
+ 955 00a6 4FF0FF30 		mov	r0, #-1
+ 956 00aa 00E0     		b	.L37
+ 957              	.L44:
+ 169:CAW-PACKAGES/BQ76920/bq76920.c ****     }
+ 958              		.loc 1 169 14 view .LVU263
+ 959              	.LBE4:
+ 960              	.LBE2:
+ 175:CAW-PACKAGES/BQ76920/bq76920.c ****   }
+ 176:CAW-PACKAGES/BQ76920/bq76920.c ****   return CAW_OK;
+ 961              		.loc 1 176 10 view .LVU264
+ 962 00ac 0020     		movs	r0, #0
+ 963              	.L37:
+ 177:CAW-PACKAGES/BQ76920/bq76920.c **** }...
+ 964              		.loc 1 177 1 view .LVU265
+ 965 00ae 03B0     		add	sp, sp, #12
+ 966              	.LCFI25:
+ 967              		.cfi_remember_state
+ 968              		.cfi_def_cfa_offset 20
+ 969              		@ sp needed
+ 970 00b0 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 971              	.LVL93:
+ 972              	.L41:
+ 973              	.LCFI26:
+ 974              		.cfi_restore_state
+ 975              	.LBB6:
+ 976              	.LBB5:
+ 166:CAW-PACKAGES/BQ76920/bq76920.c ****       return CAW_ERR;
+ 977              		.loc 1 166 14 view .LVU266
+ 978 00b2 4FF0FF30 		mov	r0, #-1
+ 979 00b6 FAE7     		b	.L37
+ 980              	.L47:
+ 981              		.align	3
+ 982              	.L46:
+ 983 00b8 CDCCCCCC 		.word	-858993459
+ 984 00bc CCCC1040 		.word	1074842828
+ 985 00c0 9A999999 		.word	-1717986918
+ 986 00c4 99191940 		.word	1075386777
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 22
+
+
+ 987 00c8 00408F40 		.word	1083129856
+ 988 00cc 00007A44 		.word	1148846080
+ 989              	.LBE5:
+ 990              	.LBE6:
+ 991              		.cfi_endproc
+ 992              	.LFE72:
+ 994              		.section	.rodata.__FUNCTION__.0,"a"
+ 995              		.align	2
+ 996              		.set	.LANCHOR1,. + 0
+ 999              	__FUNCTION__.0:
+ 1000 0000 5F493243 		.ascii	"_I2C_WRITE_BYTE\000"
+ 1000      5F575249 
+ 1000      54455F42 
+ 1000      59544500 
+ 1001              		.section	.rodata.__FUNCTION__.1,"a"
+ 1002              		.align	2
+ 1003              		.set	.LANCHOR0,. + 0
+ 1006              	__FUNCTION__.1:
+ 1007 0000 5F493243 		.ascii	"_I2C_READ_BYTE\000"
+ 1007      5F524541 
+ 1007      445F4259 
+ 1007      544500
+ 1008              		.text
+ 1009              	.Letext0:
+ 1010              		.file 2 "c:\\develop\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
+ 1011              		.file 3 "c:\\develop\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
+ 1012              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 1013              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 1014              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 1015              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h"
+ 1016              		.file 8 "CAW-PACKAGES/BQ76920/bq76920.h"
+ 1017              		.file 9 "CAW-PACKAGES/caw_status.h"
+ 1018              		.file 10 "CAW-PACKAGES/Utils/Log/log.h"
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bq76920.c
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:18     .text._CRC8_CCITT_Update:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:24     .text._CRC8_CCITT_Update:00000000 _CRC8_CCITT_Update
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:91     .rodata._I2C_READ_BYTE.str1.4:00000000 $d
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:98     .text._I2C_READ_BYTE:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:104    .text._I2C_READ_BYTE:00000000 _I2C_READ_BYTE
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:168    .text._I2C_READ_BYTE:0000003c $d
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:175    .rodata._I2C_WRITE_BYTE.str1.4:00000000 $d
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:179    .text._I2C_WRITE_BYTE:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:185    .text._I2C_WRITE_BYTE:00000000 _I2C_WRITE_BYTE
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:282    .text._I2C_WRITE_BYTE:0000005c $d
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:295    .text.BQ76920_Init:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:301    .text.BQ76920_Init:00000000 BQ76920_Init
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:534    .text.BQ76920_Init:0000014c $d
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:539    .text.BQ76920_SysStat:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:545    .text.BQ76920_SysStat:00000000 BQ76920_SysStat
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:633    .text.BQ76920_SysCtrl2:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:639    .text.BQ76920_SysCtrl2:00000000 BQ76920_SysCtrl2
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:727    .text.BQ76920_CellBal1:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:733    .text.BQ76920_CellBal1:00000000 BQ76920_CellBal1
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:812    .text.BQ76920_UpdateCellVoltage:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:818    .text.BQ76920_UpdateCellVoltage:00000000 BQ76920_UpdateCellVoltage
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:983    .text.BQ76920_UpdateCellVoltage:000000b8 $d
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:995    .rodata.__FUNCTION__.0:00000000 $d
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:999    .rodata.__FUNCTION__.0:00000000 __FUNCTION__.0
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:1002   .rodata.__FUNCTION__.1:00000000 $d
+C:\Users\Rick\AppData\Local\Temp\ccfibEBc.s:1006   .rodata.__FUNCTION__.1:00000000 __FUNCTION__.1
+
+UNDEFINED SYMBOLS
+HAL_I2C_Mem_Read
+CAW_LOG_Write
+HAL_I2C_Master_Transmit
+__aeabi_i2f
+__aeabi_i2d
+__aeabi_ddiv
+__aeabi_d2f
+__aeabi_fdiv
+__aeabi_f2uiz
+__aeabi_ui2f
+__aeabi_fmul
+__aeabi_fadd
+__aeabi_f2d
+__aeabi_dmul

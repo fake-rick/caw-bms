@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "log.h": "c"
+  },
+  "cortex-debug.armToolchainPath": "c:\\Users\\Rick\\AppData\\Roaming\\Code\\User\\globalStorage\\bmd.stm32-for-vscode\\@xpack-dev-tools\\arm-none-eabi-gcc\\13.2.1-1.1.1\\.content\\bin",
+  "cortex-debug.openocdPath": "C:\\USERS\\RICK\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\OPENOCD\\0.12.0-2.1\\.CONTENT\\BIN\\OPENOCD.EXE"
+}

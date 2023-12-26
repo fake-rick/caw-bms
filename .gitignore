@@ -1,3 +1,7 @@
 ﻿Source/build
 *.wrl
 Source/.vscode
+build-GUI-Desktop*
+CawBMS-backups
+*.TMP
+*.pro.user

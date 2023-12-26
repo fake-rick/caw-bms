@@ -1,0 +1,642 @@
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"log.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.rodata.CAW_LOG_Write.str1.4,"aMS",%progbits,1
+  18              		.align	2
+  19              	.LC0:
+  20 0000 1B5B303B 		.ascii	"\033[0;36mCawBMS-[DEBUG] <%s> | <%d> | <%s>: %s\033"
+  20      33366D43 
+  20      6177424D 
+  20      532D5B44 
+  20      45425547 
+  21 002d 5B6D0D0A 		.ascii	"[m\015\012\000"
+  21      00
+  22 0032 0000     		.align	2
+  23              	.LC1:
+  24 0034 1B5B303B 		.ascii	"\033[0;32mCawBMS-[INFO] <%s> | <%d> | <%s>: %s\033["
+  24      33326D43 
+  24      6177424D 
+  24      532D5B49 
+  24      4E464F5D 
+  25 0061 6D0D0A00 		.ascii	"m\015\012\000"
+  26 0065 000000   		.align	2
+  27              	.LC2:
+  28 0068 1B5B303B 		.ascii	"\033[0;33mCawBMS-[WARN] <%s> | <%d> | <%s>: %s\033["
+  28      33336D43 
+  28      6177424D 
+  28      532D5B57 
+  28      41524E5D 
+  29 0095 6D0D0A00 		.ascii	"m\015\012\000"
+  30 0099 000000   		.align	2
+  31              	.LC3:
+  32 009c 1B5B303B 		.ascii	"\033[0;31mCawBMS-[ERROR] <%s> | <%d> | <%s>: %s\033"
+  32      33316D43 
+  32      6177424D 
+  32      532D5B45 
+  32      52524F52 
+  33 00c9 5B6D0D0A 		.ascii	"[m\015\012\000"
+  33      00
+  34 00ce 0000     		.align	2
+  35              	.LC4:
+  36 00d0 1B5B303B 		.ascii	"\033[0;35mCawBMS-[FAIL] <%s> | <%d> | <%s>: %s\033["
+  36      33356D43 
+  36      6177424D 
+  36      532D5B46 
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 2
+
+
+  36      41494C5D 
+  37 00fd 6D0D0A00 		.ascii	"m\015\012\000"
+  38              		.section	.text.CAW_LOG_Write,"ax",%progbits
+  39              		.align	1
+  40              		.global	CAW_LOG_Write
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  45              	CAW_LOG_Write:
+  46              	.LVL0:
+  47              	.LFB69:
+  48              		.file 1 "CAW-PACKAGES/Utils/Log/log.c"
+   1:CAW-PACKAGES/Utils/Log/log.c **** /*
+   2:CAW-PACKAGES/Utils/Log/log.c ****  * @Author: Rick rick@guaik.io
+   3:CAW-PACKAGES/Utils/Log/log.c ****  * @Date: 2023-08-29 23:50:14
+   4:CAW-PACKAGES/Utils/Log/log.c ****  * @LastEditors: Rick
+   5:CAW-PACKAGES/Utils/Log/log.c ****  * @LastEditTime: 2023-09-25 21:18:16
+   6:CAW-PACKAGES/Utils/Log/log.c ****  * @Description:
+   7:CAW-PACKAGES/Utils/Log/log.c ****  */
+   8:CAW-PACKAGES/Utils/Log/log.c **** 
+   9:CAW-PACKAGES/Utils/Log/log.c **** #include "log.h"
+  10:CAW-PACKAGES/Utils/Log/log.c **** 
+  11:CAW-PACKAGES/Utils/Log/log.c **** #include <stdarg.h>
+  12:CAW-PACKAGES/Utils/Log/log.c **** #include <stdint.h>
+  13:CAW-PACKAGES/Utils/Log/log.c **** #include <stdio.h>
+  14:CAW-PACKAGES/Utils/Log/log.c **** #include <string.h>
+  15:CAW-PACKAGES/Utils/Log/log.c **** 
+  16:CAW-PACKAGES/Utils/Log/log.c **** #include "usart.h"
+  17:CAW-PACKAGES/Utils/Log/log.c **** 
+  18:CAW-PACKAGES/Utils/Log/log.c **** /**
+  19:CAW-PACKAGES/Utils/Log/log.c ****  * @description: 日志发送函数，在该函数中实现发送逻辑
+  20:CAW-PACKAGES/Utils/Log/log.c ****  * @param {uint8_t*} buf
+  21:CAW-PACKAGES/Utils/Log/log.c ****  * @param {uint32_t} size
+  22:CAW-PACKAGES/Utils/Log/log.c ****  * @return {*}
+  23:CAW-PACKAGES/Utils/Log/log.c ****  */
+  24:CAW-PACKAGES/Utils/Log/log.c **** inline void _Write(const uint8_t *buf, uint32_t size) {
+  25:CAW-PACKAGES/Utils/Log/log.c ****   HAL_UART_Transmit(&huart1, buf, size, HAL_MAX_DELAY);
+  26:CAW-PACKAGES/Utils/Log/log.c **** }
+  27:CAW-PACKAGES/Utils/Log/log.c **** 
+  28:CAW-PACKAGES/Utils/Log/log.c **** void CAW_LOG_Write(const char *fmt, CAW_LOG_LEVEL level, const char *file,
+  29:CAW-PACKAGES/Utils/Log/log.c ****                    int line, const char *func, ...) {
+  49              		.loc 1 29 53 view -0
+  50              		.cfi_startproc
+  51              		@ args = 4, pretend = 0, frame = 264
+  52              		@ frame_needed = 0, uses_anonymous_args = 1
+  53              		.loc 1 29 53 is_stmt 0 view .LVU1
+  54 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  55              	.LCFI0:
+  56              		.cfi_def_cfa_offset 32
+  57              		.cfi_offset 4, -32
+  58              		.cfi_offset 5, -28
+  59              		.cfi_offset 6, -24
+  60              		.cfi_offset 7, -20
+  61              		.cfi_offset 8, -16
+  62              		.cfi_offset 9, -12
+  63              		.cfi_offset 10, -8
+  64              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 3
+
+
+  65 0004 C6B0     		sub	sp, sp, #280
+  66              	.LCFI1:
+  67              		.cfi_def_cfa_offset 312
+  68 0006 8246     		mov	r10, r0
+  69 0008 8946     		mov	r9, r1
+  70 000a 1446     		mov	r4, r2
+  71 000c 1D46     		mov	r5, r3
+  72 000e 4EAE     		add	r6, sp, #312
+  73              	.LVL1:
+  74              		.loc 1 29 53 view .LVU2
+  75 0010 56F8047B 		ldr	r7, [r6], #4
+  76              	.LVL2:
+  30:CAW-PACKAGES/Utils/Log/log.c ****   char tmp[128];
+  77              		.loc 1 30 3 is_stmt 1 view .LVU3
+  31:CAW-PACKAGES/Utils/Log/log.c ****   char buf[128];
+  78              		.loc 1 31 3 view .LVU4
+  32:CAW-PACKAGES/Utils/Log/log.c ****   memset(tmp, 0, sizeof(tmp));
+  79              		.loc 1 32 3 view .LVU5
+  80 0014 4FF08008 		mov	r8, #128
+  81 0018 4246     		mov	r2, r8
+  82              	.LVL3:
+  83              		.loc 1 32 3 is_stmt 0 view .LVU6
+  84 001a 0021     		movs	r1, #0
+  85              	.LVL4:
+  86              		.loc 1 32 3 view .LVU7
+  87 001c 26A8     		add	r0, sp, #152
+  88              	.LVL5:
+  89              		.loc 1 32 3 view .LVU8
+  90 001e FFF7FEFF 		bl	memset
+  91              	.LVL6:
+  33:CAW-PACKAGES/Utils/Log/log.c ****   memset(buf, 0, sizeof(buf));
+  92              		.loc 1 33 3 is_stmt 1 view .LVU9
+  93 0022 4246     		mov	r2, r8
+  94 0024 0021     		movs	r1, #0
+  95 0026 06A8     		add	r0, sp, #24
+  96 0028 FFF7FEFF 		bl	memset
+  97              	.LVL7:
+  34:CAW-PACKAGES/Utils/Log/log.c ****   va_list args;
+  98              		.loc 1 34 3 view .LVU10
+  35:CAW-PACKAGES/Utils/Log/log.c ****   va_start(args, fmt);
+  99              		.loc 1 35 3 view .LVU11
+ 100 002c 0596     		str	r6, [sp, #20]
+  36:CAW-PACKAGES/Utils/Log/log.c ****   vsprintf(tmp, (char *)fmt, args);
+ 101              		.loc 1 36 3 view .LVU12
+ 102 002e 3246     		mov	r2, r6
+ 103 0030 5146     		mov	r1, r10
+ 104 0032 26A8     		add	r0, sp, #152
+ 105 0034 FFF7FEFF 		bl	vsprintf
+ 106              	.LVL8:
+  37:CAW-PACKAGES/Utils/Log/log.c ****   va_end(args);
+ 107              		.loc 1 37 3 view .LVU13
+  38:CAW-PACKAGES/Utils/Log/log.c **** 
+  39:CAW-PACKAGES/Utils/Log/log.c ****   if (level == LOG_LEVEL_DEBUG) {
+ 108              		.loc 1 39 3 view .LVU14
+ 109              		.loc 1 39 6 is_stmt 0 view .LVU15
+ 110 0038 B9F5805F 		cmp	r9, #4096
+ 111 003c 1ED0     		beq	.L11
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 4
+
+
+  40:CAW-PACKAGES/Utils/Log/log.c **** #ifdef CAWFOC_LOG_COLOR_ENABLE
+  41:CAW-PACKAGES/Utils/Log/log.c ****     snprintf(buf, sizeof(buf),
+  42:CAW-PACKAGES/Utils/Log/log.c ****              "\033[0;36mCawBMS-[DEBUG] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+  43:CAW-PACKAGES/Utils/Log/log.c ****              line, func, tmp);
+  44:CAW-PACKAGES/Utils/Log/log.c **** #else
+  45:CAW-PACKAGES/Utils/Log/log.c ****     snprintf(buf, sizeof(buf), "CawFOC-[DEBUG] <%s> | <%d> | <%s>: %s\r\n",
+  46:CAW-PACKAGES/Utils/Log/log.c ****              file, line, func, tmp);
+  47:CAW-PACKAGES/Utils/Log/log.c **** #endif
+  48:CAW-PACKAGES/Utils/Log/log.c ****   } else if (level == LOG_LEVEL_INFO) {
+ 112              		.loc 1 48 10 is_stmt 1 view .LVU16
+ 113              		.loc 1 48 13 is_stmt 0 view .LVU17
+ 114 003e 41F20103 		movw	r3, #4097
+ 115 0042 9945     		cmp	r9, r3
+ 116 0044 32D0     		beq	.L12
+  49:CAW-PACKAGES/Utils/Log/log.c **** #ifdef CAWFOC_LOG_COLOR_ENABLE
+  50:CAW-PACKAGES/Utils/Log/log.c ****     snprintf(buf, sizeof(buf),
+  51:CAW-PACKAGES/Utils/Log/log.c ****              "\033[0;32mCawBMS-[INFO] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+  52:CAW-PACKAGES/Utils/Log/log.c ****              line, func, tmp);
+  53:CAW-PACKAGES/Utils/Log/log.c **** #else
+  54:CAW-PACKAGES/Utils/Log/log.c ****     snprintf(buf, sizeof(buf), "CawFOC-[INFO] <%s> | <%d> | <%s>: %s\r\n", file,
+  55:CAW-PACKAGES/Utils/Log/log.c ****              line, func, tmp);
+  56:CAW-PACKAGES/Utils/Log/log.c **** #endif
+  57:CAW-PACKAGES/Utils/Log/log.c ****   } else if (level == LOG_LEVEL_WARN) {
+ 117              		.loc 1 57 10 is_stmt 1 view .LVU18
+ 118              		.loc 1 57 13 is_stmt 0 view .LVU19
+ 119 0046 41F20203 		movw	r3, #4098
+ 120 004a 9945     		cmp	r9, r3
+ 121 004c 39D0     		beq	.L13
+  58:CAW-PACKAGES/Utils/Log/log.c **** #ifdef CAWFOC_LOG_COLOR_ENABLE
+  59:CAW-PACKAGES/Utils/Log/log.c ****     snprintf(buf, sizeof(buf),
+  60:CAW-PACKAGES/Utils/Log/log.c ****              "\033[0;33mCawBMS-[WARN] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+  61:CAW-PACKAGES/Utils/Log/log.c ****              line, func, tmp);
+  62:CAW-PACKAGES/Utils/Log/log.c **** #else
+  63:CAW-PACKAGES/Utils/Log/log.c ****     snprintf(buf, sizeof(buf), "CawFOC-[WARN] <%s> | <%d> | <%s>: %s\r\n", file,
+  64:CAW-PACKAGES/Utils/Log/log.c ****              line, func, tmp);
+  65:CAW-PACKAGES/Utils/Log/log.c **** #endif
+  66:CAW-PACKAGES/Utils/Log/log.c ****   } else if (level == LOG_LEVEL_ERROR) {
+ 122              		.loc 1 66 10 is_stmt 1 view .LVU20
+ 123              		.loc 1 66 13 is_stmt 0 view .LVU21
+ 124 004e 41F20303 		movw	r3, #4099
+ 125 0052 9945     		cmp	r9, r3
+ 126 0054 40D0     		beq	.L14
+  67:CAW-PACKAGES/Utils/Log/log.c **** #ifdef CAWFOC_LOG_COLOR_ENABLE
+  68:CAW-PACKAGES/Utils/Log/log.c ****     snprintf(buf, sizeof(buf),
+  69:CAW-PACKAGES/Utils/Log/log.c ****              "\033[0;31mCawBMS-[ERROR] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+  70:CAW-PACKAGES/Utils/Log/log.c ****              line, func, tmp);
+  71:CAW-PACKAGES/Utils/Log/log.c **** #else
+  72:CAW-PACKAGES/Utils/Log/log.c ****     snprintf(buf, sizeof(buf), "CawFOC-[ERROR] <%s> | <%d> | <%s>: %s\r\n",
+  73:CAW-PACKAGES/Utils/Log/log.c ****              file, line, func, tmp);
+  74:CAW-PACKAGES/Utils/Log/log.c **** #endif
+  75:CAW-PACKAGES/Utils/Log/log.c ****   } else if (level == LOG_LEVEL_FAIL) {
+ 127              		.loc 1 75 10 is_stmt 1 view .LVU22
+ 128              		.loc 1 75 13 is_stmt 0 view .LVU23
+ 129 0056 41F20403 		movw	r3, #4100
+ 130 005a 9945     		cmp	r9, r3
+ 131 005c 23D1     		bne	.L1
+ 132              	.L8:
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 5
+
+
+  76:CAW-PACKAGES/Utils/Log/log.c ****     while (1) {
+ 133              		.loc 1 76 5 is_stmt 1 discriminator 1 view .LVU24
+  77:CAW-PACKAGES/Utils/Log/log.c **** #ifdef CAWFOC_LOG_COLOR_ENABLE
+  78:CAW-PACKAGES/Utils/Log/log.c ****       snprintf(buf, sizeof(buf),
+ 134              		.loc 1 78 7 discriminator 1 view .LVU25
+ 135 005e 26A9     		add	r1, sp, #152
+ 136 0060 0291     		str	r1, [sp, #8]
+ 137 0062 0197     		str	r7, [sp, #4]
+ 138 0064 0095     		str	r5, [sp]
+ 139 0066 2346     		mov	r3, r4
+ 140 0068 214A     		ldr	r2, .L15
+ 141 006a 8021     		movs	r1, #128
+ 142 006c 06A8     		add	r0, sp, #24
+ 143 006e FFF7FEFF 		bl	snprintf
+ 144              	.LVL9:
+  79:CAW-PACKAGES/Utils/Log/log.c ****                "\033[0;35mCawBMS-[FAIL] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+  80:CAW-PACKAGES/Utils/Log/log.c ****                line, func, tmp);
+  81:CAW-PACKAGES/Utils/Log/log.c **** #else
+  82:CAW-PACKAGES/Utils/Log/log.c ****       snprintf(buf, sizeof(buf), "CawFOC-[ERROR] <%s> | <%d> | <%s>: %s\r\n",
+  83:CAW-PACKAGES/Utils/Log/log.c ****                file, line, func, tmp);
+  84:CAW-PACKAGES/Utils/Log/log.c **** #endif
+  85:CAW-PACKAGES/Utils/Log/log.c ****       HAL_Delay(1000);
+ 145              		.loc 1 85 7 discriminator 1 view .LVU26
+ 146 0072 4FF47A70 		mov	r0, #1000
+ 147 0076 FFF7FEFF 		bl	HAL_Delay
+ 148              	.LVL10:
+  76:CAW-PACKAGES/Utils/Log/log.c **** #ifdef CAWFOC_LOG_COLOR_ENABLE
+ 149              		.loc 1 76 11 discriminator 1 view .LVU27
+ 150 007a F0E7     		b	.L8
+ 151              	.L11:
+  41:CAW-PACKAGES/Utils/Log/log.c ****              "\033[0;36mCawBMS-[DEBUG] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+ 152              		.loc 1 41 5 view .LVU28
+ 153 007c 26AB     		add	r3, sp, #152
+ 154 007e 0293     		str	r3, [sp, #8]
+ 155 0080 0197     		str	r7, [sp, #4]
+ 156 0082 0095     		str	r5, [sp]
+ 157 0084 2346     		mov	r3, r4
+ 158 0086 1B4A     		ldr	r2, .L15+4
+ 159 0088 4146     		mov	r1, r8
+ 160 008a 06A8     		add	r0, sp, #24
+ 161 008c FFF7FEFF 		bl	snprintf
+ 162              	.LVL11:
+ 163              	.L3:
+  86:CAW-PACKAGES/Utils/Log/log.c ****     }
+  87:CAW-PACKAGES/Utils/Log/log.c ****   } else {
+  88:CAW-PACKAGES/Utils/Log/log.c ****     return;
+  89:CAW-PACKAGES/Utils/Log/log.c ****   }
+  90:CAW-PACKAGES/Utils/Log/log.c ****   _Write(buf, strlen(buf) + 1);
+ 164              		.loc 1 90 3 view .LVU29
+ 165              		.loc 1 90 15 is_stmt 0 view .LVU30
+ 166 0090 06A8     		add	r0, sp, #24
+ 167 0092 FFF7FEFF 		bl	strlen
+ 168              	.LVL12:
+ 169              		.loc 1 90 27 view .LVU31
+ 170 0096 421C     		adds	r2, r0, #1
+ 171              	.LVL13:
+ 172              	.LBB8:
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 6
+
+
+ 173              	.LBI8:
+  24:CAW-PACKAGES/Utils/Log/log.c ****   HAL_UART_Transmit(&huart1, buf, size, HAL_MAX_DELAY);
+ 174              		.loc 1 24 13 is_stmt 1 view .LVU32
+ 175              	.LBB9:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 176              		.loc 1 25 3 view .LVU33
+ 177 0098 4FF0FF33 		mov	r3, #-1
+ 178 009c 92B2     		uxth	r2, r2
+ 179              	.LVL14:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 180              		.loc 1 25 3 is_stmt 0 view .LVU34
+ 181 009e 06A9     		add	r1, sp, #24
+ 182              	.LVL15:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 183              		.loc 1 25 3 view .LVU35
+ 184 00a0 1548     		ldr	r0, .L15+8
+ 185              	.LVL16:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 186              		.loc 1 25 3 view .LVU36
+ 187 00a2 FFF7FEFF 		bl	HAL_UART_Transmit
+ 188              	.LVL17:
+ 189              	.L1:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 190              		.loc 1 25 3 view .LVU37
+ 191              	.LBE9:
+ 192              	.LBE8:
+  91:CAW-PACKAGES/Utils/Log/log.c **** }
+ 193              		.loc 1 91 1 view .LVU38
+ 194 00a6 46B0     		add	sp, sp, #280
+ 195              	.LCFI2:
+ 196              		.cfi_remember_state
+ 197              		.cfi_def_cfa_offset 32
+ 198              		@ sp needed
+ 199 00a8 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 200              	.LVL18:
+ 201              	.L12:
+ 202              	.LCFI3:
+ 203              		.cfi_restore_state
+  50:CAW-PACKAGES/Utils/Log/log.c ****              "\033[0;32mCawBMS-[INFO] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+ 204              		.loc 1 50 5 is_stmt 1 view .LVU39
+ 205 00ac 26AB     		add	r3, sp, #152
+ 206 00ae 0293     		str	r3, [sp, #8]
+ 207 00b0 0197     		str	r7, [sp, #4]
+ 208 00b2 0095     		str	r5, [sp]
+ 209 00b4 2346     		mov	r3, r4
+ 210 00b6 114A     		ldr	r2, .L15+12
+ 211 00b8 8021     		movs	r1, #128
+ 212 00ba 06A8     		add	r0, sp, #24
+ 213 00bc FFF7FEFF 		bl	snprintf
+ 214              	.LVL19:
+ 215 00c0 E6E7     		b	.L3
+ 216              	.L13:
+  59:CAW-PACKAGES/Utils/Log/log.c ****              "\033[0;33mCawBMS-[WARN] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+ 217              		.loc 1 59 5 view .LVU40
+ 218 00c2 26AB     		add	r3, sp, #152
+ 219 00c4 0293     		str	r3, [sp, #8]
+ 220 00c6 0197     		str	r7, [sp, #4]
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 7
+
+
+ 221 00c8 0095     		str	r5, [sp]
+ 222 00ca 2346     		mov	r3, r4
+ 223 00cc 0C4A     		ldr	r2, .L15+16
+ 224 00ce 8021     		movs	r1, #128
+ 225 00d0 06A8     		add	r0, sp, #24
+ 226 00d2 FFF7FEFF 		bl	snprintf
+ 227              	.LVL20:
+ 228 00d6 DBE7     		b	.L3
+ 229              	.L14:
+  68:CAW-PACKAGES/Utils/Log/log.c ****              "\033[0;31mCawBMS-[ERROR] <%s> | <%d> | <%s>: %s\033[m\r\n", file,
+ 230              		.loc 1 68 5 view .LVU41
+ 231 00d8 26AB     		add	r3, sp, #152
+ 232 00da 0293     		str	r3, [sp, #8]
+ 233 00dc 0197     		str	r7, [sp, #4]
+ 234 00de 0095     		str	r5, [sp]
+ 235 00e0 2346     		mov	r3, r4
+ 236 00e2 084A     		ldr	r2, .L15+20
+ 237 00e4 8021     		movs	r1, #128
+ 238 00e6 06A8     		add	r0, sp, #24
+ 239 00e8 FFF7FEFF 		bl	snprintf
+ 240              	.LVL21:
+ 241 00ec D0E7     		b	.L3
+ 242              	.L16:
+ 243 00ee 00BF     		.align	2
+ 244              	.L15:
+ 245 00f0 D0000000 		.word	.LC4
+ 246 00f4 00000000 		.word	.LC0
+ 247 00f8 00000000 		.word	huart1
+ 248 00fc 34000000 		.word	.LC1
+ 249 0100 68000000 		.word	.LC2
+ 250 0104 9C000000 		.word	.LC3
+ 251              		.cfi_endproc
+ 252              	.LFE69:
+ 254              		.section	.text.CAW_LOG_RAW,"ax",%progbits
+ 255              		.align	1
+ 256              		.global	CAW_LOG_RAW
+ 257              		.syntax unified
+ 258              		.thumb
+ 259              		.thumb_func
+ 261              	CAW_LOG_RAW:
+ 262              	.LVL22:
+ 263              	.LFB70:
+  92:CAW-PACKAGES/Utils/Log/log.c **** 
+  93:CAW-PACKAGES/Utils/Log/log.c **** void CAW_LOG_RAW(const char *str) { _Write(str, strlen(str) + 1); }
+ 264              		.loc 1 93 35 view -0
+ 265              		.cfi_startproc
+ 266              		@ args = 0, pretend = 0, frame = 0
+ 267              		@ frame_needed = 0, uses_anonymous_args = 0
+ 268              		.loc 1 93 35 is_stmt 0 view .LVU43
+ 269 0000 10B5     		push	{r4, lr}
+ 270              	.LCFI4:
+ 271              		.cfi_def_cfa_offset 8
+ 272              		.cfi_offset 4, -8
+ 273              		.cfi_offset 14, -4
+ 274 0002 0446     		mov	r4, r0
+ 275              		.loc 1 93 37 is_stmt 1 view .LVU44
+ 276              		.loc 1 93 49 is_stmt 0 view .LVU45
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 8
+
+
+ 277 0004 FFF7FEFF 		bl	strlen
+ 278              	.LVL23:
+ 279              		.loc 1 93 61 view .LVU46
+ 280 0008 421C     		adds	r2, r0, #1
+ 281              	.LVL24:
+ 282              	.LBB10:
+ 283              	.LBI10:
+  24:CAW-PACKAGES/Utils/Log/log.c ****   HAL_UART_Transmit(&huart1, buf, size, HAL_MAX_DELAY);
+ 284              		.loc 1 24 13 is_stmt 1 view .LVU47
+ 285              	.LBB11:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 286              		.loc 1 25 3 view .LVU48
+ 287 000a 4FF0FF33 		mov	r3, #-1
+ 288 000e 92B2     		uxth	r2, r2
+ 289              	.LVL25:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 290              		.loc 1 25 3 is_stmt 0 view .LVU49
+ 291 0010 2146     		mov	r1, r4
+ 292 0012 0248     		ldr	r0, .L19
+ 293              	.LVL26:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 294              		.loc 1 25 3 view .LVU50
+ 295 0014 FFF7FEFF 		bl	HAL_UART_Transmit
+ 296              	.LVL27:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 297              		.loc 1 25 3 view .LVU51
+ 298              	.LBE11:
+ 299              	.LBE10:
+ 300              		.loc 1 93 67 view .LVU52
+ 301 0018 10BD     		pop	{r4, pc}
+ 302              	.LVL28:
+ 303              	.L20:
+ 304              		.loc 1 93 67 view .LVU53
+ 305 001a 00BF     		.align	2
+ 306              	.L19:
+ 307 001c 00000000 		.word	huart1
+ 308              		.cfi_endproc
+ 309              	.LFE70:
+ 311              		.section	.rodata.CAW_LOG_Welcome.str1.4,"aMS",%progbits,1
+ 312              		.align	2
+ 313              	.LC5:
+ 314 0000 0D0A7C2D 		.ascii	"\015\012|----------------------------------------|\015"
+ 314      2D2D2D2D 
+ 314      2D2D2D2D 
+ 314      2D2D2D2D 
+ 314      2D2D2D2D 
+ 315 002d 0A7C2020 		.ascii	"\012|            \033[0;31mWelcome to CawBMS\033[m "
+ 315      20202020 
+ 315      20202020 
+ 315      20201B5B 
+ 315      303B3331 
+ 316 0057 20202020 		.ascii	"          |\015\012|-------------------------------"
+ 316      20202020 
+ 316      20207C0D 
+ 316      0A7C2D2D 
+ 316      2D2D2D2D 
+ 317 0084 2D2D2D2D 		.ascii	"---------|\015\012|            Author: FakeRick    "
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 9
+
+
+ 317      2D2D2D2D 
+ 317      2D7C0D0A 
+ 317      7C202020 
+ 317      20202020 
+ 318 00b1 20202020 		.ascii	"        |\015\012|---------------------------------"
+ 318      20202020 
+ 318      7C0D0A7C 
+ 318      2D2D2D2D 
+ 318      2D2D2D2D 
+ 319 00de 2D2D2D2D 		.ascii	"-------|\015\012|              MIT License         "
+ 319      2D2D2D7C 
+ 319      0D0A7C20 
+ 319      20202020 
+ 319      20202020 
+ 320 010b 20202020 		.ascii	"      |\015\012|-----------------------------------"
+ 320      20207C0D 
+ 320      0A7C2D2D 
+ 320      2D2D2D2D 
+ 320      2D2D2D2D 
+ 321 0138 2D2D2D2D 		.ascii	"-----|\015\012|  https://space.bilibili.com/3583302"
+ 321      2D7C0D0A 
+ 321      7C202068 
+ 321      74747073 
+ 321      3A2F2F73 
+ 322 0165 38322020 		.ascii	"82  |\015\012\015\012\000"
+ 322      7C0D0A0D 
+ 322      0A00
+ 323              		.section	.text.CAW_LOG_Welcome,"ax",%progbits
+ 324              		.align	1
+ 325              		.global	CAW_LOG_Welcome
+ 326              		.syntax unified
+ 327              		.thumb
+ 328              		.thumb_func
+ 330              	CAW_LOG_Welcome:
+ 331              	.LFB71:
+  94:CAW-PACKAGES/Utils/Log/log.c **** 
+  95:CAW-PACKAGES/Utils/Log/log.c **** void CAW_LOG_Welcome(void) {
+ 332              		.loc 1 95 28 is_stmt 1 view -0
+ 333              		.cfi_startproc
+ 334              		@ args = 0, pretend = 0, frame = 368
+ 335              		@ frame_needed = 0, uses_anonymous_args = 0
+ 336 0000 00B5     		push	{lr}
+ 337              	.LCFI5:
+ 338              		.cfi_def_cfa_offset 4
+ 339              		.cfi_offset 14, -4
+ 340 0002 DDB0     		sub	sp, sp, #372
+ 341              	.LCFI6:
+ 342              		.cfi_def_cfa_offset 376
+  96:CAW-PACKAGES/Utils/Log/log.c ****   char buf[] =
+ 343              		.loc 1 96 3 view .LVU55
+ 344              		.loc 1 96 8 is_stmt 0 view .LVU56
+ 345 0004 40F26F12 		movw	r2, #367
+ 346 0008 0849     		ldr	r1, .L23
+ 347 000a 6846     		mov	r0, sp
+ 348 000c FFF7FEFF 		bl	memcpy
+ 349              	.LVL29:
+  97:CAW-PACKAGES/Utils/Log/log.c ****       "\r\n"
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 10
+
+
+  98:CAW-PACKAGES/Utils/Log/log.c ****       "|----------------------------------------|\r\n"
+  99:CAW-PACKAGES/Utils/Log/log.c ****       "|            \033[0;31mWelcome to CawBMS\033[m           |\r\n"
+ 100:CAW-PACKAGES/Utils/Log/log.c ****       "|----------------------------------------|\r\n"
+ 101:CAW-PACKAGES/Utils/Log/log.c ****       "|            Author: FakeRick            |\r\n"
+ 102:CAW-PACKAGES/Utils/Log/log.c ****       "|----------------------------------------|\r\n"
+ 103:CAW-PACKAGES/Utils/Log/log.c ****       "|              MIT License               |\r\n"
+ 104:CAW-PACKAGES/Utils/Log/log.c ****       "|----------------------------------------|\r\n"
+ 105:CAW-PACKAGES/Utils/Log/log.c ****       "|  https://space.bilibili.com/358330282  |\r\n"
+ 106:CAW-PACKAGES/Utils/Log/log.c ****       "\r\n";
+ 107:CAW-PACKAGES/Utils/Log/log.c ****   _Write(buf, strlen(buf) + 1);
+ 350              		.loc 1 107 3 is_stmt 1 view .LVU57
+ 351              		.loc 1 107 15 is_stmt 0 view .LVU58
+ 352 0010 6846     		mov	r0, sp
+ 353 0012 FFF7FEFF 		bl	strlen
+ 354              	.LVL30:
+ 355              		.loc 1 107 27 view .LVU59
+ 356 0016 421C     		adds	r2, r0, #1
+ 357              	.LVL31:
+ 358              	.LBB12:
+ 359              	.LBI12:
+  24:CAW-PACKAGES/Utils/Log/log.c ****   HAL_UART_Transmit(&huart1, buf, size, HAL_MAX_DELAY);
+ 360              		.loc 1 24 13 is_stmt 1 view .LVU60
+ 361              	.LBB13:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 362              		.loc 1 25 3 view .LVU61
+ 363 0018 4FF0FF33 		mov	r3, #-1
+ 364 001c 92B2     		uxth	r2, r2
+ 365              	.LVL32:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 366              		.loc 1 25 3 is_stmt 0 view .LVU62
+ 367 001e 6946     		mov	r1, sp
+ 368 0020 0348     		ldr	r0, .L23+4
+ 369              	.LVL33:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 370              		.loc 1 25 3 view .LVU63
+ 371 0022 FFF7FEFF 		bl	HAL_UART_Transmit
+ 372              	.LVL34:
+  25:CAW-PACKAGES/Utils/Log/log.c **** }
+ 373              		.loc 1 25 3 view .LVU64
+ 374              	.LBE13:
+ 375              	.LBE12:
+ 108:CAW-PACKAGES/Utils/Log/log.c **** }...
+ 376              		.loc 1 108 1 view .LVU65
+ 377 0026 5DB0     		add	sp, sp, #372
+ 378              	.LCFI7:
+ 379              		.cfi_def_cfa_offset 4
+ 380              		@ sp needed
+ 381 0028 5DF804FB 		ldr	pc, [sp], #4
+ 382              	.L24:
+ 383              		.align	2
+ 384              	.L23:
+ 385 002c 00000000 		.word	.LC5
+ 386 0030 00000000 		.word	huart1
+ 387              		.cfi_endproc
+ 388              	.LFE71:
+ 390              		.text
+ 391              	.Letext0:
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 11
+
+
+ 392              		.file 2 "c:\\develop\\gnu arm embedded toolchain\\10 2021.10\\lib\\gcc\\arm-none-eabi\\10.3.1\\inc
+ 393              		.file 3 "c:\\develop\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\machine\\_de
+ 394              		.file 4 "c:\\develop\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\sys\\_stdint
+ 395              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 396              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 397              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 398              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
+ 399              		.file 9 "CAW-PACKAGES/Utils/Log/log.h"
+ 400              		.file 10 "c:\\develop\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\string.h"
+ 401              		.file 11 "<built-in>"
+ 402              		.file 12 "c:\\develop\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\stdio.h"
+ 403              		.file 13 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 404              		.file 14 "Core/Inc/usart.h"
+ARM GAS  C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 log.c
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:18     .rodata.CAW_LOG_Write.str1.4:00000000 $d
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:39     .text.CAW_LOG_Write:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:45     .text.CAW_LOG_Write:00000000 CAW_LOG_Write
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:245    .text.CAW_LOG_Write:000000f0 $d
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:255    .text.CAW_LOG_RAW:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:261    .text.CAW_LOG_RAW:00000000 CAW_LOG_RAW
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:307    .text.CAW_LOG_RAW:0000001c $d
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:312    .rodata.CAW_LOG_Welcome.str1.4:00000000 $d
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:324    .text.CAW_LOG_Welcome:00000000 $t
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:330    .text.CAW_LOG_Welcome:00000000 CAW_LOG_Welcome
+C:\Users\Rick\AppData\Local\Temp\ccuK0ER5.s:385    .text.CAW_LOG_Welcome:0000002c $d
+
+UNDEFINED SYMBOLS
+memset
+vsprintf
+snprintf
+HAL_Delay
+strlen
+HAL_UART_Transmit
+huart1
+memcpy
