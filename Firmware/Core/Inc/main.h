@@ -64,12 +64,16 @@ void Error_Handler(void);
 #define LED_A_GPIO_Port GPIOC
 #define LED_B_Pin GPIO_PIN_15
 #define LED_B_GPIO_Port GPIOC
+#define OLED_DC_Pin GPIO_PIN_0
+#define OLED_DC_GPIO_Port GPIOA
 #define KEY_A_Pin GPIO_PIN_9
 #define KEY_A_GPIO_Port GPIOA
 #define CAN_STB_Pin GPIO_PIN_10
 #define CAN_STB_GPIO_Port GPIOA
 #define SPI1_NSS_Pin GPIO_PIN_15
 #define SPI1_NSS_GPIO_Port GPIOA
+#define OLED_DCB4_Pin GPIO_PIN_4
+#define OLED_DCB4_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

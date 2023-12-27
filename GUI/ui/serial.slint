@@ -1,0 +1,48 @@
+import { HorizontalBox, VerticalBox, GroupBox , ComboBox, StandardButton, Button} from "std-widgets.slint";
+import { CellInfo } from "cell_info.slint";
+import { IconButton , ToolButton} from "widgets/buttons.slint";
+
+export component Serial inherits Rectangle {
+    border-radius: 5px;
+    background: #1b94f7eb;
+    property <image> refresh_image: @image-url("assets/imgs/refresh.svg");
+    in-out property <[string]> cbx-model <=> cbx.model;
+    callback refresh-clicked <=> refresh_btn.clicked;
+    callback connect-clicked(string);
+
+    VerticalBox {
+        spacing: 5px;
+        alignment: LayoutAlignment.start;
+        Text {
+            text: "Serial";
+            font-size: 18px;
+            color: #fff;
+        }
+        
+        HorizontalBox {
+            alignment: LayoutAlignment.start;
+            Text {
+                text: "Select";
+                font-size: 14px;
+                color: #fff;
+            } 
+            cbx := ComboBox { 
+                height: 20px;
+                width: 100px;
+            }
+            refresh_btn := IconButton {
+                icon: refresh_image;
+                height: 20px;
+                width: 20px;
+            }
+            connect_btn := ToolButton { 
+                text: @tr("connect");
+                height: 20px;
+                width: 60px;
+                clicked => {
+                    root.connect-clicked(cbx.current-value);
+                }
+             }
+        }    
+    } 
+}

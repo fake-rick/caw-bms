@@ -1,0 +1,21 @@
+import { HorizontalBox, VerticalBox, GroupBox } from "std-widgets.slint";
+import { CellInfo } from "cell_info.slint";
+
+export component CellList inherits Rectangle {
+    border-radius: 5px;
+    width: 300px;
+    background: #4c00ff70;
+
+    VerticalBox {
+        for cell in [
+            {name: "CELL-1"},
+            {name: "CELL-2"},
+            {name: "CELL-3"},
+            {name: "CELL-4"},
+            {name: "CELL-5"}
+        ]:
+        CellInfo {
+            name: cell.name;
+        }
+    } 
+}

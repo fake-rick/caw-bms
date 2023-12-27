@@ -36,7 +36,7 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
-CAW-PACKAGES/BQ76920/bq76920.c \
+CAW-PACKAGES/Drivers/BQ76920/bq76920.c \
 CAW-PACKAGES/Utils/Log/log.c \
 Core/Src/can.c \
 Core/Src/gpio.c \
@@ -136,7 +136,7 @@ AS_INCLUDES = \
 # C includes
 C_INCLUDES =  \
 -ICAW-PACKAGES \
--ICAW-PACKAGES/BQ76920 \
+-ICAW-PACKAGES/Drivers/BQ76920 \
 -ICAW-PACKAGES/Utils/CAN \
 -ICAW-PACKAGES/Utils/Log \
 -ICore/Inc \

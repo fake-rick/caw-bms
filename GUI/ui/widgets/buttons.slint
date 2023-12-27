@@ -1,0 +1,33 @@
+import { HorizontalBox, VerticalBox} from "std-widgets.slint";
+
+export component IconButton inherits Rectangle {
+    in-out property <image> icon;
+    callback clicked <=> touch.clicked;
+
+    img := Image {
+        source: root.icon;
+        colorize: touch.pressed ? #fff : #fffc;
+        width: parent.width;
+        height: parent.height;
+    }
+    
+    touch := TouchArea {
+    }
+} 
+
+export component ToolButton inherits Rectangle {
+    callback clicked <=> touch.clicked;
+    in property <string> text <=> txt.text;
+    background: touch.pressed ? #fff : #fffc;
+    border-radius: 5px;
+    txt := Text {
+        width: parent.width;
+        height: parent.height;
+        color: #333;
+        vertical-alignment: center;
+        horizontal-alignment: center;
+    }
+    
+    touch := TouchArea {
+    }
+} 
