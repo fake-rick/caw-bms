@@ -174,5 +174,6 @@ int BQ76920_SysStat(BQ76920_T* bq, BQ76920_SYS_STAT_T* st);
 int BQ76920_SysCtrl2(BQ76920_T* bq, BQ76920_SYS_CTRL2_T* st);
 int BQ76920_CellBal1(BQ76920_T* bq, BQ76920_CELLBAL1_T* st);
 int BQ76920_UpdateCellVoltage(BQ76920_T* bq);
+int BQ76920_Shutdown(BQ76920_T* bq);
 
 #endif

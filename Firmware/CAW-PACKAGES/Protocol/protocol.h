@@ -7,8 +7,8 @@
 #pragma pack(1)
 typedef struct _PACK_HEAD {
   uint8_t magic[4];
+  uint16_t cmd;
   uint32_t length;
-  uint16_t type;
   uint16_t version;
 } PACK_HEAD;
 #pragma pack()

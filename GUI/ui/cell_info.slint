@@ -7,14 +7,14 @@ export component CellInfo inherits Rectangle {
     property <int> p_val: p.progress * 100;
     HorizontalBox {
         cell_nbr := Text {
-            color: #fff;
+            color: #333;
         }
         p := ProgressIndicator {
             progress: 0.5;
         }
         Text {
             text: p_val + "%";
-            color: #fff;
+            color: #333;
         }
     }
     

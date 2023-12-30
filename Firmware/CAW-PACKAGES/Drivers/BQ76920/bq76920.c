@@ -51,7 +51,7 @@ int BQ76920_Init(BQ76920_T* bq, I2C_HandleTypeDef* i2c) {
   _I2C_WRITE_BYTE(bq, SYS_STAT, 0xff);
   _I2C_WRITE_BYTE(bq, CC_CFG, 0x19);
   _I2C_WRITE_BYTE(bq, SYS_CTRL1, 0x10);
-  _I2C_WRITE_BYTE(bq, SYS_CTRL2, 0xC3);
+  _I2C_WRITE_BYTE(bq, SYS_CTRL2, 0x43);
 
   uint8_t adc_gain_reg[2];
   _I2C_READ_BYTE(bq, ADCGAIN1, &adc_gain_reg[0]);
@@ -86,7 +86,8 @@ int BQ76920_Init(BQ76920_T* bq, I2C_HandleTypeDef* i2c) {
 
   // 配置过压阈值
   uint16_t OV = BQ76920_OV_TARGET * 1000.0;  // to mV
-  uint16_t OV_tmp = (float)(OV - bq->OFFSET) / (float)(bq->GAIN / 1000.0);
+  uint16_t OV_tmp =
+      (uint16_t)((float)(OV - bq->OFFSET) / (float)(bq->GAIN / 1000.0));
   OV_tmp = (OV_tmp & 0x0FF0) >> 4;
   uint8_t OV_TRIP_value = OV_tmp & 0xFF;
   _I2C_WRITE_BYTE(bq, OV_TRIP, OV_TRIP_value);
@@ -174,4 +175,10 @@ int BQ76920_UpdateCellVoltage(BQ76920_T* bq) {
     bq->CellVoltage[i] = 4.2 * bq->CellVoltage[i] / 6.275;
   }
   return CAW_OK;
+}
+
+int BQ76920_Shutdown(BQ76920_T* bq) {
+  _I2C_WRITE_BYTE(bq, SYS_CTRL1, 0x0);
+  _I2C_WRITE_BYTE(bq, SYS_CTRL1, 0x1);
+  _I2C_WRITE_BYTE(bq, SYS_CTRL1, 0x2);
 }

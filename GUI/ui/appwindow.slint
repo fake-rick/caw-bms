@@ -1,42 +1,29 @@
 import { Button, VerticalBox, HorizontalBox, GroupBox} from "std-widgets.slint";
 import { CellList } from "cell_list.slint";
 import { Log } from "log.slint";
-import { Serial } from "serial.slint"; 
+import { Home } from "home.slint";
 
-export global SerialService {
-    in-out property <[string]> serials;
-    callback refresh-clicked;
-    callback connect-clicked(string);
+export global AppService {
+    in-out property <bool> device-state : false;
 }
 
 export component AppWindow inherits Window {
     width: 800px;
     height: 600px;
-
     title: "CawBMS - Desktop";
     background: #000e;
-
     init => {
         debug("AppWindow init");
     }
-
-    VerticalBox {
-        HorizontalBox { 
-            CellList {}
-            Serial {
-                height: 100px;
-                width: 280px;
-                cbx-model: SerialService.serials;
-                refresh-clicked => {
-                    SerialService.refresh-clicked();
-                }
-
-                connect-clicked(current-value) => {
-                    SerialService.connect-clicked(current-value);
-                }
-
+    if AppService.device-state:
+        VerticalBox {
+            HorizontalBox { 
+                CellList {}
             }
+            Log {}
         }
-        Log {}
-    }
+    if !AppService.device-state:
+        Home {  }
+    
+    
 }

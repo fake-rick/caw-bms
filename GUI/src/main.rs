@@ -1,47 +1,61 @@
+mod protocol;
+mod utils;
 use lazy_static::*;
+use protocol::*;
 use serialport::SerialPort;
-use slint::{ModelRc, SharedString, VecModel};
 use std::sync::Mutex;
-use std::{rc::Rc, time::Duration};
+use std::thread;
+use std::time::Duration;
 slint::include_modules!();
 
 lazy_static! {
     static ref SERIAL: Mutex<Option<Box<dyn SerialPort>>> = Mutex::new(None);
 }
 
-fn get_serials() -> Rc<VecModel<SharedString>> {
-    let ports = serialport::available_ports().expect("No ports found!");
-    let serial_model: Rc<VecModel<SharedString>> = Rc::new(VecModel::from(vec![]));
-    for p in ports {
-        println!("{}", p.port_name);
-        serial_model.push(SharedString::from(p.port_name));
-    }
-    serial_model
-}
-
-fn main() -> Result<(), slint::PlatformError> {
-    let ui = AppWindow::new()?;
-
-    let serial_model_rc = ModelRc::from(get_serials().clone());
-    print!("{:?}", serial_model_rc);
-    ui.global::<SerialService>().set_serials(serial_model_rc);
-
-    let ui_handle = ui.as_weak();
-    ui.global::<SerialService>().on_refresh_clicked(move || {
-        let ui = ui_handle.unwrap();
-        let serial_model_rc = ModelRc::from(get_serials().clone());
-        ui.global::<SerialService>().set_serials(serial_model_rc);
-    });
-    ui.global::<SerialService>()
-        .on_connect_clicked(|current_serial: SharedString| {
-            println!("on_connect_clicked: {}", current_serial);
-            if let Ok(port) = serialport::new(current_serial.as_str(), 115_200)
+fn ping_device() {
+    if let Ok(ports) = serialport::available_ports() {
+        for p in ports {
+            if let Ok(mut port) = serialport::new(p.port_name.clone(), 115200)
                 .timeout(Duration::from_millis(10))
                 .open()
             {
-                println!("serial {:?} connected", port);
-                *SERIAL.lock().unwrap() = Some(port);
+                if let Ok(data) = pingpong::BmsPing::new(p.port_name.clone()).encode() {
+                    let _ = port.write(&data);
+                }
             }
+        }
+    }
+}
+
+// #[tokio::main]
+fn main() -> Result<(), slint::PlatformError> {
+    let ui = AppWindow::new()?;
+
+    let handle_weak = ui.as_weak();
+    thread::spawn(move || {
+        let mut pack = Pack::new();
+        pack.register_event(cmd::BMS_PONG, move |_| {
+            let handle_copy = handle_weak.clone();
+            let _ = slint::invoke_from_event_loop(move || {
+                handle_copy
+                    .unwrap()
+                    .global::<AppService>()
+                    .set_device_state(true)
+            });
         });
+        loop {
+            if let Err(_) = match &mut *SERIAL.lock().unwrap() {
+                Some(device) => pack.event_process(device),
+                None => {
+                    ping_device();
+                    println!("ping device ...");
+                    Ok(())
+                }
+            } {
+                *SERIAL.lock().unwrap() = None;
+            }
+        }
+    });
+
     ui.run()
 }

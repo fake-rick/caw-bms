@@ -16,9 +16,10 @@ export component IconButton inherits Rectangle {
 } 
 
 export component ToolButton inherits Rectangle {
-    callback clicked <=> touch.clicked;
+    callback clicked;
     in property <string> text <=> txt.text;
-    background: touch.pressed ? #fff : #fffc;
+    in-out property <bool> enable;
+    background: enable ? touch.pressed ? #fff : #fffc : #666;
     border-radius: 5px;
     txt := Text {
         width: parent.width;
@@ -29,5 +30,10 @@ export component ToolButton inherits Rectangle {
     }
     
     touch := TouchArea {
+        clicked => {
+            if (root.enable) {
+                root.clicked();
+            }
+        }
     }
 } 
