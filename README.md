@@ -6,6 +6,16 @@ CawBMS是一套基于STM32F103和BQ76920的锂电池管理系统。所有设计�
 
 **请保留PCB、源码文件中的作者及Logo的相关信息。**
 
+
+
+![https://github.com/fake-rick/caw-drive/blob/master/Docs/imgs/g20231004124547.png](https://github.com/fake-rick/caw-bms/blob/master/Docs/imgs/20231230223442.png)
+
+
+
+![https://github.com/fake-rick/caw-bms/blob/master/Docs/imgs/20231230223503.png](https://github.com/fake-rick/caw-bms/blob/master/Docs/imgs/20231230223503.png)
+
+
+
 ## 🛠 功能
 
 | 名称      | 开发状态 | 测试状态 |
