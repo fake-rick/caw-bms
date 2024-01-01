@@ -66,22 +66,22 @@ int BQ76920_Init(BQ76920_T* bq, I2C_HandleTypeDef* i2c) {
   // 设置PROTECT1
   uint8_t protect1_reg;
   _I2C_READ_BYTE(bq, PROTECT1, &protect1_reg);
-  protect1_reg = protect1_reg | (SCD_DELAY_100us << 3);
-  protect1_reg = protect1_reg | SCD_THRESHOLD_44mV;
+  protect1_reg = protect1_reg | (SCD_DELAY_70us << 3);
+  protect1_reg = protect1_reg | SCD_THRESHOLD_22mV;
   _I2C_WRITE_BYTE(bq, PROTECT1, protect1_reg);
 
   // 设置PROTECT2
   uint8_t protect2_reg;
   _I2C_READ_BYTE(bq, PROTECT2, &protect2_reg);
-  protect2_reg = protect2_reg | (OCD_DELAY_160ms << 4);
-  protect2_reg = protect2_reg | OCD_THRESHOLD_8mV;
+  protect2_reg = protect2_reg | (OCD_DELAY_8ms << 4);
+  protect2_reg = protect2_reg | OCD_THRESHOLD_8mV;  // 16A
   _I2C_WRITE_BYTE(bq, PROTECT2, protect2_reg);
 
   // 设置PROTECT3
   uint8_t protect3_reg;
   _I2C_READ_BYTE(bq, PROTECT3, &protect3_reg);
-  protect3_reg = protect3_reg | (UV_DELAY_4s << 6);
-  protect3_reg = protect3_reg | (OV_DELAY_4s << 4);
+  protect3_reg = protect3_reg | (UV_DELAY_1s << 6);
+  protect3_reg = protect3_reg | (OV_DELAY_1s << 4);
   _I2C_WRITE_BYTE(bq, PROTECT3, protect3_reg);
 
   // 配置过压阈值
@@ -172,7 +172,6 @@ int BQ76920_UpdateCellVoltage(BQ76920_T* bq) {
     uint16_t v = ((reg[0] & 0x3F) << 8) | reg[1];
     bq->CellVoltage[i] =
         ((float)(bq->GAIN / 1000.0) * (float)v + (float)(bq->OFFSET)) / 1000.0;
-    bq->CellVoltage[i] = 4.2 * bq->CellVoltage[i] / 6.275;
   }
   return CAW_OK;
 }

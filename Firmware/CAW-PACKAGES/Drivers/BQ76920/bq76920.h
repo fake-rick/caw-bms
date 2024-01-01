@@ -7,7 +7,7 @@
 #define BQ76920_I2C_ADDRESS (0x08 << 1)
 #define BQ76920_I2C_TIMEOUT 500
 #define BQ76920_GAIN_BASE 365
-#define BQ76920_OV_TARGET 4.18
+#define BQ76920_OV_TARGET 4.2
 #define BQ76920_UV_TARGET 2.7
 
 typedef struct _BQ76920_T {

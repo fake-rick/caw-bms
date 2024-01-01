@@ -113,10 +113,10 @@ int main(void) {
     CAW_LOG_DEBUG("state: %d %d %d %d %d %d %d %d", state.CC_READY, state.RSVD,
                   state.DEVICE_XREADY, state.OVRD_ALERT, state.UV, state.OV,
                   state.SCD, state.OCD);
-    // BQ76920_UpdateCellVoltage(&afe);
-    // CAW_LOG_DEBUG("c1: %f c2: %f c3: %f c4: %f c5 %f", afe.CellVoltage[0],
-    //               afe.CellVoltage[1], afe.CellVoltage[2], afe.CellVoltage[3],
-    //               afe.CellVoltage[4]);
+    BQ76920_UpdateCellVoltage(&afe);
+    CAW_LOG_DEBUG("c1: %f c2: %f c3: %f c4: %f c5 %f", afe.CellVoltage[0],
+                  afe.CellVoltage[1], afe.CellVoltage[2], afe.CellVoltage[3],
+                  afe.CellVoltage[4]);
 
     BQ76920_SYS_CTRL2_T ctl2;
     BQ76920_SysCtrl2(&afe, &ctl2);
