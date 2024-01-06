@@ -216,13 +216,37 @@ int BQ76920_UpdateBalanceCell(BQ76920_T* bq) {
     _I2C_WRITE_BYTE(bq, CELLBAL1, 0x00);
     return 0;
   }
-  float max_value = bq->CellVoltage[0];
+  float sum = 0.0f;
+  float avg = 0.0f;
+  float threshold_h = 0.01;
+  float threshold_l = 0.005;
+  float v[5];
+  for (int i = 0; i < 5; i++) {
+    sum += bq->CellVoltage[i];
+  }
+  avg = sum / 5;
+  for (int i = 0; i < 5; i++) {
+    v[i] = bq->CellVoltage[i] - avg;
+  }
+  float max_value = v[0];
   int index = 0;
   for (int i = 1; i < 5; i++) {
-    if (max_value < bq->CellVoltage[i]) {
+    if (max_value < v[i]) {
       index = i;
-      max_value = bq->CellVoltage[i];
+      max_value = v[i];
     }
   }
-  _I2C_WRITE_BYTE(bq, CELLBAL1, 0x01 << index);
+  if (max_value > threshold_h) {
+    _I2C_WRITE_BYTE(bq, CELLBAL1, 0x01 << index);
+  } else if (max_value < threshold_l) {
+    _I2C_WRITE_BYTE(bq, CELLBAL1, 0x00);
+  }
+  return 0;
+}
+
+int BQ76920_Step(BQ76920_T* bq) {
+  BQ76920_UpdateCellVoltage(bq);
+  BQ76920_UpdatePackVoltage(bq);
+  BQ76920_UpdateCurrent(bq);
+  return 0;
 }

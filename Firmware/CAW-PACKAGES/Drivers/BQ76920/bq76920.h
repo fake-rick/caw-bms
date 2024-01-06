@@ -180,5 +180,6 @@ int BQ76920_Shutdown(BQ76920_T* bq);
 int BQ76920_UpdatePackVoltage(BQ76920_T* bq);
 int BQ76920_UpdateCurrent(BQ76920_T* bq);
 int BQ76920_UpdateBalanceCell(BQ76920_T* bq);
+int BQ76920_Step(BQ76920_T* bq);
 
 #endif
