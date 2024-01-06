@@ -15,6 +15,8 @@ typedef struct _BQ76920_T {
   uint16_t GAIN;
   uint16_t OFFSET;
   float CellVoltage[5];
+  float VPack;
+  float current;
 } BQ76920_T;
 
 typedef enum _BQ76920_REG_MAP_E {
@@ -175,5 +177,8 @@ int BQ76920_SysCtrl2(BQ76920_T* bq, BQ76920_SYS_CTRL2_T* st);
 int BQ76920_CellBal1(BQ76920_T* bq, BQ76920_CELLBAL1_T* st);
 int BQ76920_UpdateCellVoltage(BQ76920_T* bq);
 int BQ76920_Shutdown(BQ76920_T* bq);
+int BQ76920_UpdatePackVoltage(BQ76920_T* bq);
+int BQ76920_UpdateCurrent(BQ76920_T* bq);
+int BQ76920_UpdateBalanceCell(BQ76920_T* bq);
 
 #endif

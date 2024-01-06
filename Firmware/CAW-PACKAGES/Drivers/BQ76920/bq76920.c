@@ -1,5 +1,7 @@
 #include "bq76920.h"
 
+#include <math.h>
+
 #include "caw_status.h"
 #include "log.h"
 
@@ -74,7 +76,7 @@ int BQ76920_Init(BQ76920_T* bq, I2C_HandleTypeDef* i2c) {
   uint8_t protect2_reg;
   _I2C_READ_BYTE(bq, PROTECT2, &protect2_reg);
   protect2_reg = protect2_reg | (OCD_DELAY_8ms << 4);
-  protect2_reg = protect2_reg | OCD_THRESHOLD_8mV;  // 16A
+  protect2_reg = protect2_reg | OCD_THRESHOLD_8mV;  // 8mV / 0.5mΩ = 16A
   _I2C_WRITE_BYTE(bq, PROTECT2, protect2_reg);
 
   // 设置PROTECT3
@@ -180,4 +182,47 @@ int BQ76920_Shutdown(BQ76920_T* bq) {
   _I2C_WRITE_BYTE(bq, SYS_CTRL1, 0x0);
   _I2C_WRITE_BYTE(bq, SYS_CTRL1, 0x1);
   _I2C_WRITE_BYTE(bq, SYS_CTRL1, 0x2);
+}
+
+int BQ76920_UpdatePackVoltage(BQ76920_T* bq) {
+  uint8_t reg[2] = {0u, 0u};
+  _I2C_READ_BYTE(bq, BAT_LO, &reg[0]);
+  _I2C_READ_BYTE(bq, BAT_HI, &reg[1]);
+  bq->VPack = (float)((reg[1] << 8 | reg[0]) * (4 * (bq->GAIN / 1000000.0f)) +
+                      (4 * (bq->OFFSET / 1000.0f)));
+}
+
+int BQ76920_UpdateCurrent(BQ76920_T* bq) {
+  uint8_t reg[2] = {0u, 0u};
+  _I2C_READ_BYTE(bq, CC_LO, &reg[0]);
+  _I2C_READ_BYTE(bq, CC_HI, &reg[1]);
+
+  int raw_data = (int16_t)((reg[1] << 8) | reg[0]);
+
+  if (raw_data & 0x8000) {
+    raw_data = -(~raw_data + 1);
+  }
+
+  if (raw_data == 1 || raw_data == -1) {
+    raw_data = 0;
+  }
+
+  bq->current = (float)raw_data * 8.44 / 0.5;
+}
+
+int BQ76920_UpdateBalanceCell(BQ76920_T* bq) {
+  if (bq->current <= 0.0f) {
+    // 不在充电状态下则关闭均衡
+    _I2C_WRITE_BYTE(bq, CELLBAL1, 0x00);
+    return 0;
+  }
+  float max_value = bq->CellVoltage[0];
+  int index = 0;
+  for (int i = 1; i < 5; i++) {
+    if (max_value < bq->CellVoltage[i]) {
+      index = i;
+      max_value = bq->CellVoltage[i];
+    }
+  }
+  _I2C_WRITE_BYTE(bq, CELLBAL1, 0x01 << index);
 }

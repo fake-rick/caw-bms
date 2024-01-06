@@ -118,10 +118,20 @@ int main(void) {
                   afe.CellVoltage[1], afe.CellVoltage[2], afe.CellVoltage[3],
                   afe.CellVoltage[4]);
 
+    BQ76920_UpdatePackVoltage(&afe);
+    BQ76920_UpdateCurrent(&afe);
+    CAW_LOG_DEBUG("VPack: %f, Current: %f", afe.VPack, afe.current);
+
     BQ76920_SYS_CTRL2_T ctl2;
     BQ76920_SysCtrl2(&afe, &ctl2);
 
     CAW_LOG_DEBUG("DSG: %d CHG: %d", ctl2.DSG_ON, ctl2.CHG_ON);
+
+    BQ76920_UpdateBalanceCell(&afe);
+    BQ76920_CELLBAL1_T cellbal;
+    BQ76920_CellBal1(&afe, &cellbal);
+    CAW_LOG_DEBUG("cb1: %d cb2: %d cb3: %d cb4: %d cb5: %d", cellbal.CB1,
+                  cellbal.CB2, cellbal.CB3, cellbal.CB4, cellbal.CB5);
 
     HAL_Delay(500);
     /* USER CODE END WHILE */
