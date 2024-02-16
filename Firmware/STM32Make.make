@@ -36,9 +36,18 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
-CAW-PACKAGES/Drivers/BQ76920/bq76920.c \
-CAW-PACKAGES/Utils/Log/log.c \
+../../caw-link-fw/caw_es/device.c \
+../../caw-link-fw/caw_es/drivers/bq76920/bq76920.c \
+../../caw-link-fw/caw_es/event.c \
+../../caw-link-fw/caw_es/event_callbacks/pingpong.c \
+../../caw-link-fw/caw_es/protocols/bms.c \
+../../caw-link-fw/caw_es/protocols/code.c \
+../../caw-link-fw/caw_es/protocols/discover.c \
+../../caw-link-fw/caw_es/protocols/protocol.c \
+../../caw-link-fw/caw_es/utils/crypto.c \
+../../caw-link-fw/caw_es/utils/endian.c \
 Core/Src/can.c \
+Core/Src/freertos.c \
 Core/Src/gpio.c \
 Core/Src/i2c.c \
 Core/Src/main.c \
@@ -63,7 +72,17 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_spi.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c
+Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c \
+Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c \
+Middlewares/Third_Party/FreeRTOS/Source/croutine.c \
+Middlewares/Third_Party/FreeRTOS/Source/event_groups.c \
+Middlewares/Third_Party/FreeRTOS/Source/list.c \
+Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/port.c \
+Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
+Middlewares/Third_Party/FreeRTOS/Source/queue.c \
+Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c \
+Middlewares/Third_Party/FreeRTOS/Source/tasks.c \
+Middlewares/Third_Party/FreeRTOS/Source/timers.c
 
 
 CPP_SOURCES = \
@@ -135,15 +154,19 @@ AS_INCLUDES = \
 
 # C includes
 C_INCLUDES =  \
--ICAW-PACKAGES \
--ICAW-PACKAGES/Drivers/BQ76920 \
--ICAW-PACKAGES/Utils/CAN \
--ICAW-PACKAGES/Utils/Log \
+-I../../caw-link-fw/caw_es \
+-I../../caw-link-fw/caw_es/drivers/bq76920 \
+-I../../caw-link-fw/caw_es/event_callbacks/ \
+-I../../caw-link-fw/caw_es/protocols \
+-I../../caw-link-fw/caw_es/utils \
 -ICore/Inc \
 -IDrivers/CMSIS/Device/ST/STM32F1xx/Include \
 -IDrivers/CMSIS/Include \
 -IDrivers/STM32F1xx_HAL_Driver/Inc \
--IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy
+-IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy \
+-IMiddlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS \
+-IMiddlewares/Third_Party/FreeRTOS/Source/include \
+-IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3
 
 
 
@@ -199,7 +222,6 @@ vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
 
-# list of ASM program objects
 # list of ASM program objects
 UPPER_CASE_ASM_SOURCES = $(filter %.S,$(ASM_SOURCES))
 LOWER_CASE_ASM_SOURCES = $(filter %.s,$(ASM_SOURCES))
