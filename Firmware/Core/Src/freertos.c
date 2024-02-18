@@ -57,8 +57,7 @@ device_t uart_device;
 event_t event;
 bq76920_t afe;
 /* USER CODE END Variables */
-osThreadId defaultTaskHandle;
-osThreadId eventTaskHandle;
+osThreadId bmsTaskHandle;
 osThreadId timerTaskHandle;
 osThreadId stateTaskHandle;
 
@@ -67,8 +66,7 @@ osThreadId stateTaskHandle;
 int reset_device();
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void const *argument);
-void StartEventTask(void const *argument);
+void StartBMSTask(void const *argument);
 void StartTimerTask(void const *argument);
 void StartStateTask(void const *argument);
 
@@ -100,12 +98,11 @@ void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
  */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-  device_init(&uart_device, &huart1, HAL_UART_Receive, HAL_UART_Transmit,
-              reset_device);
+  device_init(&uart_device);
   device_set_id(&uart_device, 0x01, device_type_bms);
-  event_init(&event, &uart_device, HAL_GetTick);
-  event_register(&event, main_code_system, sub_code_system_ping, pingpong_cb);
-
+  event_init(&uart_device);
+  event_register(main_code_system, sub_code_system_ping, pingpong_cb);
+  event_run();
   bq76920_init(&afe, &hi2c1);
   /* USER CODE END Init */
 
@@ -126,13 +123,9 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
-
-  /* definition and creation of eventTask */
-  osThreadDef(eventTask, StartEventTask, osPriorityNormal, 0, 128);
-  eventTaskHandle = osThreadCreate(osThread(eventTask), NULL);
+  /* definition and creation of bmsTask */
+  osThreadDef(bmsTask, StartBMSTask, osPriorityNormal, 0, 256);
+  bmsTaskHandle = osThreadCreate(osThread(bmsTask), NULL);
 
   /* definition and creation of timerTask */
   osThreadDef(timerTask, StartTimerTask, osPriorityNormal, 0, 128);
@@ -147,15 +140,15 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_THREADS */
 }
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_StartBMSTask */
 /**
- * @brief  Function implementing the defaultTask thread.
+ * @brief  Function implementing the bmsTask thread.
  * @param  argument: Not used
  * @retval None
  */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const *argument) {
-  /* USER CODE BEGIN StartDefaultTask */
+/* USER CODE END Header_StartBMSTask */
+void StartBMSTask(void const *argument) {
+  /* USER CODE BEGIN StartBMSTask */
   /* Infinite loop */
   for (;;) {
     bq76920_step(&afe);
@@ -181,26 +174,9 @@ void StartDefaultTask(void const *argument) {
     bms.dsg = ctl2.DSG_ON;
     bms.chg = ctl2.CHG_ON;
     protocol_write_bms_info(&uart_device, &bms);
-    osDelay(1000);
+    osDelay(40);
   }
-  /* USER CODE END StartDefaultTask */
-}
-
-/* USER CODE BEGIN Header_StartEventTask */
-/**
- * @brief Function implementing the eventTask thread.
- * @param argument: Not used
- * @retval None
- */
-/* USER CODE END Header_StartEventTask */
-void StartEventTask(void const *argument) {
-  /* USER CODE BEGIN StartEventTask */
-  /* Infinite loop */
-  for (;;) {
-    event_loop(&event);
-    osDelay(1);
-  }
-  /* USER CODE END StartEventTask */
+  /* USER CODE END StartBMSTask */
 }
 
 /* USER CODE BEGIN Header_StartTimerTask */
@@ -214,8 +190,8 @@ void StartTimerTask(void const *argument) {
   /* USER CODE BEGIN StartTimerTask */
   /* Infinite loop */
   for (;;) {
-    event_timer(&event);
-    osDelay(1);
+    event_timer();
+    osDelay(1000);
   }
   /* USER CODE END StartTimerTask */
 }
@@ -239,8 +215,4 @@ void StartStateTask(void const *argument) {
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-int reset_device() {
-  HAL_UART_DeInit(&huart1);
-  HAL_UART_Init(&huart1);
-}
 /* USER CODE END Application */
