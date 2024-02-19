@@ -124,7 +124,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of bmsTask */
-  osThreadDef(bmsTask, StartBMSTask, osPriorityNormal, 0, 256);
+  osThreadDef(bmsTask, StartBMSTask, osPriorityNormal, 0, 128);
   bmsTaskHandle = osThreadCreate(osThread(bmsTask), NULL);
 
   /* definition and creation of timerTask */
@@ -168,13 +168,13 @@ void StartBMSTask(void const *argument) {
     }
     bms.voltage = afe.v_pack * 100;
     bms.current = afe.current / 1000.0 * 100;
-    bms.temperature = 0;
+    bms.temperature = afe.temperature * 100;
     bms.soc = 0;
     bms.soh = 0;
     bms.dsg = ctl2.DSG_ON;
     bms.chg = ctl2.CHG_ON;
     protocol_write_bms_info(&uart_device, &bms);
-    osDelay(40);
+    osDelay(100);
   }
   /* USER CODE END StartBMSTask */
 }
