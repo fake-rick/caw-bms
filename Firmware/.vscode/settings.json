@@ -2,6 +2,9 @@
   "files.associations": {
     "log.h": "c"
   },
-  "cortex-debug.armToolchainPath": "c:\\Users\\Rick\\AppData\\Roaming\\Code\\User\\globalStorage\\bmd.stm32-for-vscode\\@xpack-dev-tools\\arm-none-eabi-gcc\\13.2.1-1.1.1\\.content\\bin",
-  "cortex-debug.openocdPath": "C:\\USERS\\RICK\\APPDATA\\ROAMING\\CODE\\USER\\GLOBALSTORAGE\\BMD.STM32-FOR-VSCODE\\@XPACK-DEV-TOOLS\\OPENOCD\\0.12.0-2.1\\.CONTENT\\BIN\\OPENOCD.EXE"
+  "cortex-debug.armToolchainPath": "c:\\Users\\Rick\\AppData\\Roaming\\Code\\User\\globalStorage\\bmd.stm32-for-vscode\\@xpack-dev-tools\\arm-none-eabi-gcc\\14.2.1-1.1.1\\.content\\bin",
+  "cortex-debug.openocdPath": "c:\\Users\\Rick\\AppData\\Roaming\\Code\\User\\globalStorage\\bmd.stm32-for-vscode\\@xpack-dev-tools\\openocd\\0.12.0-6.1\\.content\\bin\\openocd.EXE",
+  "stm32-for-vscode.openOCDPath": "c:\\Users\\Rick\\AppData\\Roaming\\Code\\User\\globalStorage\\bmd.stm32-for-vscode\\@xpack-dev-tools\\openocd\\0.12.0-6.1\\.content\\bin\\openocd.EXE",
+  "stm32-for-vscode.makePath": "c:\\Users\\Rick\\AppData\\Roaming\\Code\\User\\globalStorage\\bmd.stm32-for-vscode\\@xpack-dev-tools\\windows-build-tools\\4.4.1-3.1\\.content\\bin\\make.EXE",
+  "stm32-for-vscode.armToolchainPath": "c:\\Users\\Rick\\AppData\\Roaming\\Code\\User\\globalStorage\\bmd.stm32-for-vscode\\@xpack-dev-tools\\arm-none-eabi-gcc\\14.2.1-1.1.1\\.content\\bin"
 }
